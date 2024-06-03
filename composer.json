@@ -31,6 +31,7 @@
         "symfony/intl": "6.4.*",
         "symfony/mailer": "6.4.*",
         "symfony/maker-bundle": "^1.58",
+        "symfony/messenger": "6.4.*",
         "symfony/mime": "6.4.*",
         "symfony/monolog-bundle": "^3.10",
         "symfony/notifier": "6.4.*",
