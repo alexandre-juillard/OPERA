@@ -1,98 +1,98 @@
 const rules = [
-    {
+  {
       test: /\.css$/,
       use: [
-        'style-loader',
-        'css-loader'
+          'style-loader',
+          'css-loader'
       ]
-    },
-    // Autres chargeurs pour JavaScript, images, etc.
-  ];
+  },
+  // Autres chargeurs pour JavaScript, images, etc.
+];
 
-  const Encore = require('@symfony/webpack-encore');
+const Encore = require('@symfony/webpack-encore');
 
 // Manually configure the runtime environment if not already configured yet by the "encore" command.
 // It's useful when you use tools that rely on webpack.config.js file.
 if (!Encore.isRuntimeEnvironmentConfigured()) {
-    Encore.configureRuntimeEnvironment(process.env.NODE_ENV || 'dev');
+  Encore.configureRuntimeEnvironment(process.env.NODE_ENV || 'dev');
 }
 
 Encore
-    // directory where compiled assets will be stored
-    .setOutputPath('public/build/')
-    // public path used by the web server to access the output path
-    .setPublicPath('/build')
-    // only needed for CDN's or subdirectory deploy
-    //.setManifestKeyPrefix('build/')
+  // directory where compiled assets will be stored
+  .setOutputPath('public/build/')
+  // public path used by the web server to access the output path
+  .setPublicPath('/build')
+  // only needed for CDN's or subdirectory deploy
+  //.setManifestKeyPrefix('build/')
 
-    /*
-     * ENTRY CONFIG
-     *
-     * Each entry will result in one JavaScript file (e.g. app.js)
-     * and one CSS file (e.g. app.css) if your JavaScript imports CSS.
-     */
-    .addEntry('app', './assets/app.js')
+  /*
+   * ENTRY CONFIG
+   *
+   * Each entry will result in one JavaScript file (e.g. app.js)
+   * and one CSS file (e.g. app.css) if your JavaScript imports CSS.
+   */
+  .addEntry('app', './assets/app.js')
 
-    .addStyleEntry('bootstrap', './node_modules/bootstrap/dist/css/bootstrap.css')
-    .addStyleEntry('calendar', './assets/styles/calendar.scss') // Créer ce fichier pour quil importe les styles de FullCalendar.
+  .addStyleEntry('bootstrap', './node_modules/bootstrap/dist/css/bootstrap.css')
+  .addStyleEntry('calendar', './assets/styles/calendar.scss') // Créer ce fichier pour qu'il importe les styles de FullCalendar.
 
-    .addEntry('notification', './assets/js/notification.js') // Ajoute notification.js comme une nouvelle entrée
-    .addStyleEntry('notification-style', './assets/styles/notification.css') // Ajoute notification.css comme une entrée de style
-    .addStyleEntry('base-bo', './assets/styles/base_bo.css') // Ajoute notification.css comme une entrée de style
+  .addEntry('notification', './assets/js/notification.js') // Ajoute notification.js comme une nouvelle entrée
+  .addStyleEntry('notification-style', './assets/styles/notification.css') // Ajoute notification.css comme une entrée de style
+  .addStyleEntry('base-bo', './assets/styles/base_bo.css') // Ajoute base_bo.css comme une entrée de style
 
-    .addStyleEntry('home-style', './assets/styles/home.scss')
-    .addEntry('home', './assets/home.js') // Assurez-vous que le chemin et le fichier existent
-    .addStyleEntry('home', './assets/styles/home.scss')
+  .addStyleEntry('home-style', './assets/styles/home.scss')
+  .addEntry('home', './assets/home.js') // Assurez-vous que le chemin et le fichier existent
+  // .addStyleEntry('home', './assets/styles/home.scss') // Cette ligne est dupliquée, renommez ou supprimez-la
 
-    // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.
-    .splitEntryChunks()
+  // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.
+  .splitEntryChunks()
 
-    // enables the Symfony UX Stimulus bridge (used in assets/bootstrap.js)
-    .enableStimulusBridge('./assets/controllers.json')
+  // enables the Symfony UX Stimulus bridge (used in assets/bootstrap.js)
+  .enableStimulusBridge('./assets/controllers.json')
 
-    // will require an extra script tag for runtime.js
-    // but, you probably want this, unless you're building a single-page app
-    .enableSingleRuntimeChunk()
+  // will require an extra script tag for runtime.js
+  // but, you probably want this, unless you're building a single-page app
+  .enableSingleRuntimeChunk()
 
-    /*
-     * FEATURE CONFIG
-     *
-     * Enable & configure other features below. For a full
-     * list of features, see:
-     * https://symfony.com/doc/current/frontend.html#adding-more-features
-     */
-    .cleanupOutputBeforeBuild()
-    .enableBuildNotifications()
-    .enableSourceMaps(!Encore.isProduction())
-    // enables hashed filenames (e.g. app.abc123.css)
-    .enableVersioning(Encore.isProduction())
+  /*
+   * FEATURE CONFIG
+   *
+   * Enable & configure other features below. For a full
+   * list of features, see:
+   * https://symfony.com/doc/current/frontend.html#adding-more-features
+   */
+  .cleanupOutputBeforeBuild()
+  .enableBuildNotifications()
+  .enableSourceMaps(!Encore.isProduction())
+  // enables hashed filenames (e.g. app.abc123.css)
+  .enableVersioning(Encore.isProduction())
 
-    // configure Babel
-    // .configureBabel((config) => {
-    //     config.plugins.push('@babel/a-babel-plugin');
-    // })
+  // configure Babel
+  // .configureBabel((config) => {
+  //     config.plugins.push('@babel/a-babel-plugin');
+  // })
 
-    // enables and configure @babel/preset-env polyfills
-    .configureBabelPresetEnv((config) => {
-        config.useBuiltIns = 'usage';
-        config.corejs = '3.23';
-    })
+  // enables and configure @babel/preset-env polyfills
+  .configureBabelPresetEnv((config) => {
+      config.useBuiltIns = 'usage';
+      config.corejs = '3.23';
+  })
 
-    // enables Sass/SCSS support
-    .enableSassLoader() // Je décommente cette ligne pour activer le support Sass/SCSS.
+  // enables Sass/SCSS support
+  .enableSassLoader() // Je décommente cette ligne pour activer le support Sass/SCSS.
 
-    // uncomment if you use TypeScript
-    //.enableTypeScriptLoader()
+  // uncomment if you use TypeScript
+  //.enableTypeScriptLoader()
 
-    // uncomment if you use React
-    //.enableReactPreset()
+  // uncomment if you use React
+  //.enableReactPreset()
 
-    // uncomment to get integrity="..." attributes on your script & link tags
-    // requires WebpackEncoreBundle 1.4 or higher
-    //.enableIntegrityHashes(Encore.isProduction())
+  // uncomment to get integrity="..." attributes on your script & link tags
+  // requires WebpackEncoreBundle 1.4 or higher
+  //.enableIntegrityHashes(Encore.isProduction())
 
-    // uncomment if you're having problems with a jQuery plugin
-    //.autoProvidejQuery()
+  // uncomment if you're having problems with a jQuery plugin
+  //.autoProvidejQuery()
 ;
 
 module.exports = Encore.getWebpackConfig();

@@ -1,11 +1,12 @@
 {% extends 'base_bo.html.twig' %}
 
-{% block title %}New Personal{% endblock %}
+{% block title %}New Personal
+{% endblock %}
 
 {% block body %}
-    <h1>Créer un nouveau collaborateur</h1>
+	<h1>Créer un nouveau collaborateur</h1>
 
-    {{ include('personal/_form.html.twig') }}
+	{{ include('personal/_form.html.twig') }}
 
-    <a href="{{ path('app_personal_index') }}">Retour</a>
+	<a href="{{ path('app_personal_index') }}">Retour</a>
 {% endblock %}
