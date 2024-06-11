@@ -20,7 +20,7 @@ class InterviewController extends AbstractController
     public function index(InterviewRepository $interviewRepository): Response
     {
         $interviews = $interviewRepository->findAll();
-        
+
         return $this->render('interview/index.html.twig', [
             'interviews' => $interviews,
         ]);
@@ -28,13 +28,13 @@ class InterviewController extends AbstractController
 
     // Route pour afficher les entretiens par manager (ajustement du nom de méthode)
     #[Route('/manager/{id}', name: 'app_interview_manager_index', methods: ['GET'], requirements: ['id' => '\d+'])]
-    public function listByManager(int $id, InterviewRepository $interviewRepository): Response 
+    public function listByManager(int $id, InterviewRepository $interviewRepository): Response
     {
-        $interviews=[];
-        if ($this->isGranted('ROLE_MANAGER')){
+        $interviews = [];
+        if ($this->isGranted('ROLE_MANAGER')) {
             $interviews = $interviewRepository->findAllByManager($id);
         }
-        if ($this->isGranted('ROLE_USER')){
+        if ($this->isGranted('ROLE_USER')) {
             $interviews = $interviewRepository->findAllByCollaborator($id);
         }
 
@@ -57,7 +57,7 @@ class InterviewController extends AbstractController
             $entityManager->persist($interview);
             $entityManager->flush();
 
-             // Redirection à la page de confirmation ou au tableau de bord de l'utilisateur
+            // Redirection à la page de confirmation ou au tableau de bord de l'utilisateur
             return $this->redirectToRoute('app_interview_manager_index', ['id' => $this->getUser()->getId()]);
         }
 
@@ -99,10 +99,10 @@ class InterviewController extends AbstractController
     #[Route('/{id}', name: 'app_interview_delete', methods: ['POST'])]
     public function delete(Security $security, Request $request, Interview $interview, EntityManagerInterface $entityManager): Response
     {
-        $user=$security->getUser();
-        $idManager=$user->getId();
+        $user = $security->getUser();
+        $idManager = $user->getId();
         // dd($idmanager);
-        if ($this->isCsrfTokenValid('delete'.$interview->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $interview->getId(), $request->request->get('_token'))) {
             $entityManager->remove($interview);
             $entityManager->flush();
             $this->addFlash('error', 'Entretien supprimé.');
@@ -111,7 +111,7 @@ class InterviewController extends AbstractController
         return $this->redirectToRoute('app_interview_manager_index', ['id' => $idManager]);
     }
 
-        #[Route('/manager/planning', name: 'manager_planning')]
+    #[Route('/manager/planning', name: 'manager_planning')]
     public function planning(InterviewRepository $interviewRepository): Response
     {
         $this->denyAccessUnlessGranted('ROLE_MANAGER');
@@ -119,12 +119,10 @@ class InterviewController extends AbstractController
         $manager = $this->getUser();
 
         // Supposons que vous avez une méthode pour récupérer les entretiens par manager
-        $interviews = $interviewRepository->findBy(['manager' => $manager]);
+        $interviews = $interviewRepository->findBy(['interviewer' => $manager]);
 
-        return $this->render('manager/planning.html.twig', [
+        return $this->render('manager/level1/planning.html.twig', [
             'interviews' => $interviews,
         ]);
     }
-
-   
 }
