@@ -26,9 +26,9 @@ use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
-use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class SecurityController extends AbstractController
@@ -121,12 +121,13 @@ class SecurityController extends AbstractController
 
     #[Route(name: 'change_password_submit')]
     #[IsGranted('IS_AUTHENTICATED_FULLY')]
-    public function changePassword(Request $request, UserPasswordHasherInterface $passwordHasher): Response
+    public function changePassword(Request $request, UserPasswordHasherInterface $passwordHasher, EntityManagerInterface $entityManager): Response
     {
 
         if (!$this->getUser()) {
             $user =  $user = new Personal();
         } else {
+            /** @var Personal */
             $user = $this->getUser();
         }
 
@@ -145,9 +146,9 @@ class SecurityController extends AbstractController
                         maxMessage: 'Votre mot de passe doit contenir 24 caracrtères maximum'
                     ),
                     // new Regex(
-                    //     pattern: "/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[^\w\d\s]).{12,24}$/",
+                    //     pattern: "/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d).+$/",
                     //     match: true,
-                    //     message: '{{ value }} ne matche pas'
+                    //     message: 'Le mot de passe doit contenir au moins un chiffre, une lettre minuscule, une lettre majuscule'
                     // )
                 ]
             ])
@@ -165,10 +166,14 @@ class SecurityController extends AbstractController
             $user->setUpdatedAt(new DateTime());
             $user->setFirstConnexion(new DateTime());
 
-            dump($plainPassword);
+            $entityManager->flush();
+
+            dump($user);
 
             // Envoyer un message de succès
             $this->addFlash("success", 'Mot de passe mis à jour avec succes');
+
+            return $this->redirectToRoute('admin_dashboard');
         }
 
         return $this->render('security/change_password.html.twig', [

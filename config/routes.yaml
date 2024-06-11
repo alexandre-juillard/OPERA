@@ -227,6 +227,7 @@ app_feedback_edit:
 check_email_submit:
   path: /email-check
   controller: App\Controller\SecurityController::check_email
+
 change_password_submit:
   path: /change-password
   controller: App\Controller\SecurityController::changePassword
