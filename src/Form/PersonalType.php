@@ -31,9 +31,9 @@ class PersonalType extends AbstractType
             ])
             ->add('matricule')
             ->add('department')
-            ->add('firstConnexion', null, [
-                'widget' => 'single_text',
-            ])
+            // ->add('firstConnexion', null, [
+            //     'widget' => 'single_text',
+            // ])
             ->add('type_contract')
             ->add('status')
             ->add('SPC')
