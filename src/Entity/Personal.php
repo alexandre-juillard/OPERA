@@ -81,6 +81,18 @@ class Personal implements PasswordAuthenticatedUserInterface, UserInterface
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $name = null;
 
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $firstConnexion = null;
+
+    #[ORM\Column(length: 50)]
+    private ?string $type_contract = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $status = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $SPC = null;
+
     // #[ORM\Column(type:"string", length:255, nullable:true)]
     // private $position;
 
@@ -512,6 +524,54 @@ class Personal implements PasswordAuthenticatedUserInterface, UserInterface
     public function setName(?string $name): static
     {
         $this->name = $name;
+
+        return $this;
+    }
+
+    public function getFirstConnexion(): ?\DateTimeInterface
+    {
+        return $this->firstConnexion;
+    }
+
+    public function setFirstConnexion(?\DateTimeInterface $firstConnexion): static
+    {
+        $this->firstConnexion = $firstConnexion;
+
+        return $this;
+    }
+
+    public function getTypeContract(): ?string
+    {
+        return $this->type_contract;
+    }
+
+    public function setTypeContract(string $type_contract): static
+    {
+        $this->type_contract = $type_contract;
+
+        return $this;
+    }
+
+    public function getStatus(): ?string
+    {
+        return $this->status;
+    }
+
+    public function setStatus(string $status): static
+    {
+        $this->status = $status;
+
+        return $this;
+    }
+
+    public function getSPC(): ?string
+    {
+        return $this->SPC;
+    }
+
+    public function setSPC(string $SPC): static
+    {
+        $this->SPC = $SPC;
 
         return $this;
     }
