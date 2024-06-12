@@ -9,6 +9,19 @@ document.addEventListener('DOMContentLoaded', function () {
             plugins: [dayGridPlugin, interactionPlugin],
             initialView: 'dayGridMonth',
             locale: 'fr',
+            headerToolbar: {
+                start: 'dayGridMonth,dayGridWeek,dayGridDay',
+                center: 'title',
+                end: 'prev,next'
+            },
+            footerToolbar: {
+                start: '',
+                center: 'today',
+                end: ''
+            },
+            weekNumbers: true,
+            weekNumberFormat: { week: 'numeric' },
+            firstDay: 1,
             events: [
                 { title: 'Réunion', start: '2024-04-25' },
                 { title: 'Entretien annuel', start: '2024-04-30' }
