@@ -93,6 +93,12 @@ class Personal implements PasswordAuthenticatedUserInterface, UserInterface
     #[ORM\Column(length: 255)]
     private ?string $SPC = null;
 
+    /**
+     * @var Collection<int, Notification>
+     */
+    #[ORM\OneToMany(targetEntity: Notification::class, mappedBy: 'personal', orphanRemoval: true)]
+    private Collection $notifications;
+
     // #[ORM\Column(type:"string", length:255, nullable:true)]
     // private $position;
 
@@ -105,6 +111,7 @@ class Personal implements PasswordAuthenticatedUserInterface, UserInterface
         $this->interviewsAsInterviewer = new ArrayCollection();
         $this->interviewsAsInterviewee = new ArrayCollection();
         $this->teams = new ArrayCollection(); // Initialisation de la collection pour les équipes
+        $this->notifications = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -572,6 +579,36 @@ class Personal implements PasswordAuthenticatedUserInterface, UserInterface
     public function setSPC(string $SPC): static
     {
         $this->SPC = $SPC;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Notification>
+     */
+    public function getNotifications(): Collection
+    {
+        return $this->notifications;
+    }
+
+    public function addNotification(Notification $notification): static
+    {
+        if (!$this->notifications->contains($notification)) {
+            $this->notifications->add($notification);
+            $notification->setPersonal($this);
+        }
+
+        return $this;
+    }
+
+    public function removeNotification(Notification $notification): static
+    {
+        if ($this->notifications->removeElement($notification)) {
+            // set the owning side to null (unless already changed)
+            if ($notification->getPersonal() === $this) {
+                $notification->setPersonal(null);
+            }
+        }
 
         return $this;
     }

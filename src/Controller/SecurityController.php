@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Notification;
 use App\Entity\User;
 use App\Entity\Personal;
 use App\Form\PersonalType;
@@ -12,6 +13,7 @@ use Symfony\Component\Mime\Email;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Form\PasswordResetRequestFormType;
+use DateInterval;
 use DateTime;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Mailer\MailerInterface;
@@ -166,6 +168,52 @@ class SecurityController extends AbstractController
             $user->setUpdatedAt(new DateTime());
             $user->setFirstConnexion(new DateTime());
 
+            // Gestion des notifications
+            $notifications = $user->getNotifications();
+
+            if ($notifications) { // Si il y a des alertees liés à un utilisateur, les supprimer
+                foreach ($notifications as $notification) {
+                    $entityManager->remove($notification);
+                }
+            }
+
+            // Création des notifcations
+            $today = new DateTime('now');
+
+            $datesInterval = ['P83D', 'P85D', 'P87D', 'P90D', 'P91D'];
+
+            foreach ($datesInterval as $interval) {
+                $notification  = new Notification();
+                $notification->setAlerte((new DateTime())->add(new DateInterval($interval)))
+                    ->setPersonal($user);
+
+                dump($notification);
+                $entityManager->persist($notification);
+                $entityManager->flush();
+            }
+            // $notification1 = new Notification();
+            // $notification1->setAlerte($today->add(new DateInterval('P83D')))
+            //     ->setPersonal($user);
+
+            // $notification2 = new Notification();
+            // $notification2->setPersonal($user)
+            //     ->setAlerte($today->add(new DateInterval('P85D')));
+
+            // $notification3 = new Notification();
+            // $notification3->setPersonal($user)
+            //     ->setAlerte($today->add(new DateInterval('P87D')));
+
+            // $notification4 = new Notification();
+            // $notification4->setPersonal($user)
+            //     ->setAlerte($today->add(new DateInterval('P90D')));
+
+            // $notification5 = new Notification();
+            // $notification5->setPersonal($user)
+            //     ->setAlerte($today->add(new DateInterval('P91D')));
+
+            // $entityManager->persist($notification1);
+            // $entityManager->persist($notification1);
+
             $entityManager->flush();
 
             dump($user);
@@ -173,7 +221,7 @@ class SecurityController extends AbstractController
             // Envoyer un message de succès
             $this->addFlash("success", 'Mot de passe mis à jour avec succes');
 
-            return $this->redirectToRoute('admin_dashboard');
+            // return $this->redirectToRoute('admin_dashboard');
         }
 
         return $this->render('security/change_password.html.twig', [

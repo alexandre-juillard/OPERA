@@ -17,7 +17,8 @@ class PersonalSubscriber implements EventSubscriberInterface
     }
     public function onLoginSuccessEvent(LoginSuccessEvent $event)
     {
-        $request = $event->getRequest();
+        //$request = $event->getRequest();
+        /** @var \User $user */
         $user = $event->getPassport()->getUser();
         // dd($user->getFirstConnexion());
         if ($user->getFirstConnexion() == null) {
