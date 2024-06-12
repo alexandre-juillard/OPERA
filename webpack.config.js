@@ -1,10 +1,10 @@
 const rules = [
   {
-      test: /\.css$/,
-      use: [
-          'style-loader',
-          'css-loader'
-      ]
+    test: /\.css$/,
+    use: [
+      'style-loader',
+      'css-loader'
+    ]
   },
   // Autres chargeurs pour JavaScript, images, etc.
 ];
@@ -43,7 +43,7 @@ Encore
   // .addStyleEntry('home-style', './assets/styles/home.scss')
   // .addEntry('home', './assets/home.js') // Assurez-vous que le chemin et le fichier existent
   // .addStyleEntry('home', './assets/styles/home.scss') // Cette ligne est dupliquée, renommez ou supprimez-la
-  
+  .addEntry('calendarjs', './assets/js/calendar.js')
   // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.
   .splitEntryChunks()
 
@@ -74,8 +74,8 @@ Encore
 
   // enables and configure @babel/preset-env polyfills
   .configureBabelPresetEnv((config) => {
-      config.useBuiltIns = 'usage';
-      config.corejs = '3.23';
+    config.useBuiltIns = 'usage';
+    config.corejs = '3.23';
   })
 
   // enables Sass/SCSS support
@@ -92,7 +92,7 @@ Encore
   //.enableIntegrityHashes(Encore.isProduction())
 
   // uncomment if you're having problems with a jQuery plugin
-  //.autoProvidejQuery()
-;
+  .autoProvidejQuery()
+  ;
 
 module.exports = Encore.getWebpackConfig();
