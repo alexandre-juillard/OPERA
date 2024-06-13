@@ -19,9 +19,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Validator\Constraints\Regex;
-use Symfony\Component\Validator\Constraints\Length;
-use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
@@ -127,7 +125,7 @@ class SecurityController extends AbstractController
     {
 
         if (!$this->getUser()) {
-            $user =  $user = new Personal();
+            return $this->redirectToRoute('app_login');
         } else {
             /** @var Personal */
             $user = $this->getUser();
@@ -140,18 +138,18 @@ class SecurityController extends AbstractController
                 'first_options'  => ['label' => 'Mot de passe'],
                 'second_options' => ['label' => 'Mot de passe repeté'],
                 'constraints' => [
-                    new NotBlank(message: 'Le mot de passe ne doit pas être vide'),
-                    new Length(
+                    new Assert\NotBlank(message: 'Le mot de passe ne doit pas être vide'),
+                    new Assert\Length(
                         min: 12,
                         max: 24,
                         minMessage: 'Votre mot de passe doit contenir 12 caractères au moins',
                         maxMessage: 'Votre mot de passe doit contenir 24 caracrtères maximum'
                     ),
-                    // new Regex(
-                    //     pattern: "/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d).+$/",
-                    //     match: true,
-                    //     message: 'Le mot de passe doit contenir au moins un chiffre, une lettre minuscule, une lettre majuscule'
-                    // )
+                    new Assert\Regex(
+                        pattern: "/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d).+$/",
+                        match: true,
+                        message: 'Le mot de passe doit contenir au moins un chiffre, une lettre minuscule, une lettre majuscule'
+                    )
                 ]
             ])
             ->add('Soumettre', SubmitType::class, [])
@@ -191,37 +189,15 @@ class SecurityController extends AbstractController
                 $entityManager->persist($notification);
                 $entityManager->flush();
             }
-            // $notification1 = new Notification();
-            // $notification1->setAlerte($today->add(new DateInterval('P83D')))
-            //     ->setPersonal($user);
 
-            // $notification2 = new Notification();
-            // $notification2->setPersonal($user)
-            //     ->setAlerte($today->add(new DateInterval('P85D')));
-
-            // $notification3 = new Notification();
-            // $notification3->setPersonal($user)
-            //     ->setAlerte($today->add(new DateInterval('P87D')));
-
-            // $notification4 = new Notification();
-            // $notification4->setPersonal($user)
-            //     ->setAlerte($today->add(new DateInterval('P90D')));
-
-            // $notification5 = new Notification();
-            // $notification5->setPersonal($user)
-            //     ->setAlerte($today->add(new DateInterval('P91D')));
-
-            // $entityManager->persist($notification1);
-            // $entityManager->persist($notification1);
-
+            $entityManager->persist($user);
             $entityManager->flush();
 
-            dump($user);
 
             // Envoyer un message de succès
             $this->addFlash("success", 'Mot de passe mis à jour avec succes');
 
-            // return $this->redirectToRoute('admin_dashboard');
+            return $this->redirectToRoute('app_login');
         }
 
         return $this->render('security/change_password.html.twig', [
