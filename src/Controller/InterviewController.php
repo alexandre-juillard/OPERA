@@ -121,8 +121,31 @@ class InterviewController extends AbstractController
         // Supposons que vous avez une méthode pour récupérer les entretiens par manager
         $interviews = $interviewRepository->findBy(['interviewer' => $manager]);
 
-        return $this->render('manager/level1/planning.html.twig', [
-            'interviews' => $interviews,
-        ]);
+        // dd($interviews);
+        //$interviews est un tableau contenant tous les entretiens en bdd avec date, status, manager, colab, type
+
+        // initialzing empty array where all interviews will be pushed in FullCalendar Format as json
+        $events = [];
+
+        //loop to get all interviews from database
+        foreach ($interviews as $interview) {
+            $events[] = [
+                'id' => $interview->getId(),
+                'start' => $interview->getDate()->format('Y-m-d H:i:s'),
+                // 'end' => $interview->get(),
+                'title' => $interview->getTitle(),
+                'status' => $interview->getStatus(),
+                'description' => $interview->getDescription()
+                // 'backgroundColor' => $interview->get(),
+            ];
+        }
+
+        //give data as array with php fct compact()
+        return $this->render(
+            'components/calendar.html.twig',
+            [
+                'events' => json_encode($events),
+            ]
+        );
     }
 }

@@ -5,6 +5,7 @@ import interactionPlugin from '@fullcalendar/interaction'; // pour les interacti
 
 document.addEventListener('DOMContentLoaded', function () {
     const calendarEl = document.getElementById('calendar');
+    let events = window.calendarEvents;
     if (calendarEl) {
         const calendar = new Calendar(calendarEl, {
             plugins: [dayGridPlugin, interactionPlugin, timeGridPlugin],
@@ -25,10 +26,7 @@ document.addEventListener('DOMContentLoaded', function () {
             weekNumberFormat: { week: 'numeric' },
             firstDay: 1,
             nowIndicator: true,
-            events: [
-                { title: 'Réunion', start: '2024-04-25' },
-                { title: 'Entretien annuel', start: '2024-04-30' }
-            ]
+            events: events
         });
         calendar.render();
     } else {

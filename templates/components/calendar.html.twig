@@ -6,10 +6,18 @@
 	class="calendar-container"> {# J'affiche le titre du calendrier #}
 	<h2>Calendrier</h2>
 
+	{# <pre>
+						{{ dump(events) }} here we got json datas from interviewcontroller
+					</pre> #}
+
 	{# Ici, je mets en place le calendrier interactif. Dans un projet réel, cela pourrait être dynamique avec JavaScript ou une bibliothèque de calendrier comme FullCalendar. #}
 	<div id="calendar"></div>
 </div>
 
 {% block javascript %}
 	{{ encore_entry_script_tags('calendarjs') }}
+	<script>
+		// variable globale js qui sera recup dans calendar.js
+window.calendarEvents = {{ events|raw }};
+	</script>
 {% endblock %}
