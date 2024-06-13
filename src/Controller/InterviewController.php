@@ -142,7 +142,7 @@ class InterviewController extends AbstractController
 
         //give data as array with php fct compact()
         return $this->render(
-            'components/calendar.html.twig',
+            'manager/level1/planning.html.twig',
             [
                 'events' => json_encode($events),
             ]

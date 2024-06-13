@@ -22,6 +22,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 center: 'today',
                 end: ''
             },
+            height: 'auto',
             weekNumbers: true,
             weekNumberFormat: { week: 'numeric' },
             firstDay: 1,
