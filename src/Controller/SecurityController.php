@@ -143,7 +143,7 @@ class SecurityController extends AbstractController
                         min: 12,
                         max: 24,
                         minMessage: 'Votre mot de passe doit contenir 12 caractères au moins',
-                        maxMessage: 'Votre mot de passe doit contenir 24 caracrtères maximum'
+                        maxMessage: 'Votre mot de passe doit contenir 24 caractères maximum'
                     ),
                     new Assert\Regex(
                         pattern: "/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d).+$/",
