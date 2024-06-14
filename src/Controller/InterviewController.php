@@ -133,10 +133,11 @@ class InterviewController extends AbstractController
                 'id' => $interview->getId(),
                 'start' => $interview->getDate()->format('Y-m-d H:i:s'),
                 'end' => $interview->getEndDate()->format('Y-m-d H:i:s'),
-                'title' => $interview->getTitle(),
+                'title' => 'Avec ' . $interview->getInterviewee()->getUsername(),
                 'status' => $interview->getStatus(),
-                'description' => $interview->getDescription(),
+                'description' => 'Description',
                 'backgroundColor' => $interview->getTypeInterview()->getBackgroundColor(),
+                'textColor' => '#000000'
             ];
         }
 

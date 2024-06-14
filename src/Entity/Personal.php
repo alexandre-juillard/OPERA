@@ -51,7 +51,7 @@ class Personal implements PasswordAuthenticatedUserInterface, UserInterface
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $department = null;
 
-   #[ORM\OneToMany(targetEntity: Goal::class, mappedBy: 'personal')]
+    #[ORM\OneToMany(targetEntity: Goal::class, mappedBy: 'personal')]
     private Collection $goals;
 
     #[ORM\ManyToMany(targetEntity: TeamMember::class, mappedBy: 'personal')]
@@ -113,7 +113,8 @@ class Personal implements PasswordAuthenticatedUserInterface, UserInterface
     }
 
     // Méthodes requises par l'interface UserInterface
-    public function getUsername(): ?string {
+    public function getUsername(): ?string
+    {
         // Je choisis d'utiliser l'email comme "username" pour l'authentification
         return $this->username;
     }
@@ -162,7 +163,8 @@ class Personal implements PasswordAuthenticatedUserInterface, UserInterface
     //     return $this;
     // }
 
-    public function getPassword(): ?string {
+    public function getPassword(): ?string
+    {
         // Je retourne simplement le mot de passe hashé
         return $this->password;
     }
@@ -234,7 +236,8 @@ class Personal implements PasswordAuthenticatedUserInterface, UserInterface
         return $this;
     }
 
-    public function getRoles(): array {
+    public function getRoles(): array
+    {
         // Je m'assure qu'il y a toujours au moins un rôle, 'ROLE_USER' par défaut
         $roles = $this->roles;
         $roles[] = 'ROLE_USER';
@@ -242,8 +245,9 @@ class Personal implements PasswordAuthenticatedUserInterface, UserInterface
         return array_unique($this->roles);
     }
 
-         // Méthode pour ajouter un rôle à l'utilisateur
-     public function addRole(string $role): self {
+    // Méthode pour ajouter un rôle à l'utilisateur
+    public function addRole(string $role): self
+    {
         if (!in_array($role, $this->roles, true)) {
             $this->roles[] = $role;
         }
@@ -252,7 +256,8 @@ class Personal implements PasswordAuthenticatedUserInterface, UserInterface
     }
 
     // Méthode pour retirer un rôle de l'utilisateur
-    public function removeRole(string $role): self {
+    public function removeRole(string $role): self
+    {
         if (($key = array_search($role, $this->roles, true)) !== false) {
             unset($this->roles[$key]);
             $this->roles = array_values($this->roles); // Je réindexe le tableau après suppression
@@ -390,7 +395,7 @@ class Personal implements PasswordAuthenticatedUserInterface, UserInterface
         return $this;
     }
 
-   /**
+    /**
      * @return Collection<int, Interview>
      * J'obtiens la collection des entretiens où la personne est l'interviewer
      */
@@ -576,4 +581,3 @@ class Personal implements PasswordAuthenticatedUserInterface, UserInterface
         return $this;
     }
 }
-
