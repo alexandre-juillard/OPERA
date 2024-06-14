@@ -176,7 +176,6 @@ class SecurityController extends AbstractController
             }
 
             // Création des notifcations
-            $today = new DateTime('now');
 
             $datesInterval = ['P83D', 'P85D', 'P87D', 'P90D', 'P91D'];
 
