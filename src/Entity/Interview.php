@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\InterviewRepository;
+use DateInterval;
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -73,6 +75,8 @@ class Interview
 
         return $this;
     }
+
+
 
     public function getStatus(): ?string
     {
@@ -195,5 +199,20 @@ class Interview
         }
 
         return $this;
+    }
+
+    //fct calculating end time of interview with TypeInterview duration
+    public function getEndDate(): ?\DateTimeInterface
+    {
+        //verif si date est défini et si la durée selon le type d'interview est non null
+        if ($this->getDate() && $this->getTypeInterview()->getDuration() !== null) {
+            //clone de l'objet date de début pour pas le modifier
+            $endDate = clone $this->getDate();
+
+            //a cet objet je lui rajoute la durée en minutes pour avoir date de fin
+            return $endDate->modify('+' . $this->getTypeInterview()->getDuration() . ' minutes');
+        }
+
+        return null;
     }
 }

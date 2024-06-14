@@ -27,6 +27,11 @@ document.addEventListener('DOMContentLoaded', function () {
             weekNumberFormat: { week: 'numeric' },
             firstDay: 1,
             nowIndicator: true,
+            slotMinTime: "08:00:00",
+            slotMaxTime: "20:00:00",
+            // weekends: false, //uncomment this line to hide Saturday/Sunday from calendar
+            //hiddenDays: [0, 1, 2, 3...], //uncomment to customize hidden days (0 = sunday, 1 = monday...)
+            //allDaySlot: false, //uncomment to hide "all-day" slot at top of calendar
             events: events
         });
         calendar.render();

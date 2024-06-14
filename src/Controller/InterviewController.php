@@ -132,13 +132,15 @@ class InterviewController extends AbstractController
             $events[] = [
                 'id' => $interview->getId(),
                 'start' => $interview->getDate()->format('Y-m-d H:i:s'),
-                // 'end' => $interview->get(),
+                'end' => $interview->getEndDate()->format('Y-m-d H:i:s'),
                 'title' => $interview->getTitle(),
                 'status' => $interview->getStatus(),
-                'description' => $interview->getDescription()
-                // 'backgroundColor' => $interview->get(),
+                'description' => $interview->getDescription(),
+                'backgroundColor' => $interview->getTypeInterview()->getBackgroundColor(),
             ];
         }
+
+
 
         //give data as array with php fct compact()
         return $this->render(

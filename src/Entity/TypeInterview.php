@@ -24,6 +24,12 @@ class TypeInterview
     #[ORM\OneToMany(mappedBy: 'typeInterview', targetEntity: Interview::class)]
     private Collection $interviews;
 
+    #[ORM\Column(length: 7, nullable: true)]
+    private ?string $backgroundColor = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?int $duration = null;
+
     public function __construct()
     {
         $this->interviews = new ArrayCollection();
@@ -81,6 +87,30 @@ class TypeInterview
                 $interview->setTypeInterview(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getBackgroundColor(): ?string
+    {
+        return $this->backgroundColor;
+    }
+
+    public function setBackgroundColor(?string $backgroundColor): static
+    {
+        $this->backgroundColor = $backgroundColor;
+
+        return $this;
+    }
+
+    public function getDuration(): ?int
+    {
+        return $this->duration;
+    }
+
+    public function setDuration(?int $duration): static
+    {
+        $this->duration = $duration;
 
         return $this;
     }
