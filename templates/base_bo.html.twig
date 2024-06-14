@@ -9,11 +9,12 @@
 		{% block stylesheets %}
 			<!-- Intégration de Bootstrap -->
 			{# <link
-																		rel="stylesheet" href="{{ asset('build/bootstrap.css') }}"> #}
+																					rel="stylesheet" href="{{ asset('build/bootstrap.css') }}"> #}
 			<!-- Intégration de FontAwesome -->
 			<link
 			href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.css" rel="stylesheet"> <!-- Styles gérés par Webpack Encore -->
 			{{ encore_entry_link_tags('app') }}
+			{{ encore_entry_link_tags('calendar') }}
 		{% endblock %}
 
 		<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
@@ -157,9 +158,9 @@
 				<span class="nav_name">Déconnexion</span>
 			</a>
 			{# <a href="#" class="nav_link">
-																																																			<i class='bx bx-log-out nav_icon'></i>
-																																																			<span class="nav_name">Déconnexion</span>
-																																																		</a> #}
+																																																						<i class='bx bx-log-out nav_icon'></i>
+																																																						<span class="nav_name">Déconnexion</span>
+																																																					</a> #}
 		</nav>
 	</body>
 </html></div><!--Container Main start--><div class="height-100 bg-white"> {% block body %}{% endblock %}
