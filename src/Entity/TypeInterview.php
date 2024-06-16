@@ -24,6 +24,9 @@ class TypeInterview
     #[ORM\OneToMany(mappedBy: 'typeInterview', targetEntity: Interview::class)]
     private Collection $interviews;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $intervalDate = null;
+
     public function __construct()
     {
         $this->interviews = new ArrayCollection();
@@ -81,6 +84,18 @@ class TypeInterview
                 $interview->setTypeInterview(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getIntervalDate(): ?string
+    {
+        return $this->intervalDate;
+    }
+
+    public function setIntervalDate(string $intervalDate): static
+    {
+        $this->intervalDate = $intervalDate;
 
         return $this;
     }
