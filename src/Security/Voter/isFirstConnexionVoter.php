@@ -8,7 +8,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 class PersonalVoter extends Voter
 {
-    public const ACCESS = 'ACCESS_DASHBOARD';
+    public const ACCESS = 'IS_FIRST_CONNEXION';
 
     protected function supports(string $attribute, mixed $subject): bool
     {
