@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 #[Route('/interview')]
 class InterviewController extends AbstractController
@@ -77,6 +78,27 @@ class InterviewController extends AbstractController
         return $this->render('interview/show.html.twig', [
             'interview' => $interview,
         ]);
+    }
+
+    #[Route('/details/{id}', name: 'app_interview_modal_details', methods: ['GET'])]
+    public function modalDetails(?Interview $interview): JsonResponse
+    {
+        //avec param converter, on récupère l'interview avec id passé en url
+
+        //si il trouve pas l'interview par son id, renvoie code erreur 404 en console
+        if (!$interview) {
+            return $this->json(['error' => 'Interview not found'], 404);
+        }
+
+
+        //envoie des données demandées dans calendar.js
+        return new JsonResponse([
+            'name' => $interview->getTypeInterview()->getName(),
+            'username' => $interview->getInterviewee()->getUsername(),
+            'date' => $interview->getDate()->format('Y-m-d H:i:s'),
+            'duration' => $interview->getTypeInterview()->getDuration(),
+            'status' => $interview->getStatus(),
+        ], 200);
     }
 
     #[Route('/{id}/edit', name: 'app_interview_edit', methods: ['GET', 'POST'])]
