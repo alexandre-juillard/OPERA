@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Interview;
 use App\Form\InterviewType;
 use App\Repository\InterviewRepository;
+use App\Repository\TypeInterviewRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
@@ -112,7 +113,7 @@ class InterviewController extends AbstractController
     }
 
     #[Route('/manager/planning', name: 'manager_planning')]
-    public function planning(InterviewRepository $interviewRepository): Response
+    public function planning(InterviewRepository $interviewRepository, TypeInterviewRepository $typeInterview): Response
     {
         $this->denyAccessUnlessGranted('ROLE_MANAGER');
         // $manager = $this->getUser(); 
@@ -148,6 +149,7 @@ class InterviewController extends AbstractController
             'manager/level1/planning.html.twig',
             [
                 'events' => json_encode($events),
+                'typeInterview' => $typeInterview->findAll(),
             ]
         );
     }
