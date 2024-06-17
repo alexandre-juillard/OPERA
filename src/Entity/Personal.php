@@ -93,6 +93,9 @@ class Personal implements PasswordAuthenticatedUserInterface, UserInterface
     #[ORM\Column(length: 255)]
     private ?string $SPC = null;
 
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $lastUpdatedPassword = null;
+
 
     // #[ORM\Column(type:"string", length:255, nullable:true)]
     // private $position;
@@ -578,6 +581,18 @@ class Personal implements PasswordAuthenticatedUserInterface, UserInterface
     public function setSPC(string $SPC): static
     {
         $this->SPC = $SPC;
+
+        return $this;
+    }
+
+    public function getLastUpdatedPassword(): ?\DateTimeInterface
+    {
+        return $this->lastUpdatedPassword;
+    }
+
+    public function setLastUpdatedPassword(?\DateTimeInterface $lastUpdatedPassword): static
+    {
+        $this->lastUpdatedPassword = $lastUpdatedPassword;
 
         return $this;
     }
