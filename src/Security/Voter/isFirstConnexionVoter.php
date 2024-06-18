@@ -6,7 +6,7 @@ use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 use Symfony\Component\Security\Core\User\UserInterface;
 
-class PersonalVoter extends Voter
+class isFirstConnexionVoter extends Voter
 {
     public const ACCESS = 'IS_FIRST_CONNEXION';
 
@@ -32,7 +32,7 @@ class PersonalVoter extends Voter
             case self::ACCESS:
                 // logic to determine if the user can EDIT
                 // return true or false
-                if (!$user->getFirstConnexion()) {
+                if ($user->getFirstConnexion()) { // si il y a une valeur dans le champs firstConnexion
                     return true;
                 }
                 break;

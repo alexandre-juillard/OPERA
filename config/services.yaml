@@ -38,5 +38,5 @@ services:
     tags:
       - { name: "security.voter" }
 
-  App\Security\Voter\PersonalVoter:
+  App\Security\Voter\isFirstConnexionVoter:
     tags: ["security.voter"]

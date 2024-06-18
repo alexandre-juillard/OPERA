@@ -166,29 +166,6 @@ class SecurityController extends AbstractController
             $user->setUpdatedAt(new DateTime());
             $user->setFirstConnexion(new DateTime());
 
-            // Gestion des notifications
-            $notifications = $user->getNotifications();
-
-            if ($notifications) { // Si il y a des alertees liés à un utilisateur, les supprimer
-                foreach ($notifications as $notification) {
-                    $entityManager->remove($notification);
-                }
-            }
-
-            // Création des notifcations
-
-            $datesInterval = ['P83D', 'P85D', 'P87D', 'P90D', 'P91D'];
-
-            foreach ($datesInterval as $interval) {
-                $notification  = new Notification();
-                $notification->setAlerte((new DateTime())->add(new DateInterval($interval)))
-                    ->setPersonal($user);
-
-                dump($notification);
-                $entityManager->persist($notification);
-                $entityManager->flush();
-            }
-
             $entityManager->persist($user);
             $entityManager->flush();
 
