@@ -2,10 +2,12 @@
 
 namespace App\Controller;
 
-use App\Entity\Notification;
+use DateTime;
+use DateInterval;
 use App\Entity\User;
 use App\Entity\Personal;
 use App\Form\PersonalType;
+use App\Entity\Notification;
 use App\Form\EmailCheckType;
 use App\Form\PasswordResetType;
 use App\Form\ChangePasswordType;
@@ -13,12 +15,12 @@ use Symfony\Component\Mime\Email;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Form\PasswordResetRequestFormType;
-use DateInterval;
-use DateTime;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -26,9 +28,9 @@ use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class SecurityController extends AbstractController
@@ -121,7 +123,7 @@ class SecurityController extends AbstractController
 
     #[Route(name: 'change_password_submit')]
     #[IsGranted('IS_AUTHENTICATED_FULLY')]
-    public function changePassword(Request $request, UserPasswordHasherInterface $passwordHasher, EntityManagerInterface $entityManager): Response
+    public function changePassword(Request $request, UserPasswordHasherInterface $passwordHasher, EntityManagerInterface $entityManager, Security $security): Response
     {
 
         if (!$this->getUser()) {
@@ -173,7 +175,9 @@ class SecurityController extends AbstractController
             // Envoyer un message de succès
             $this->addFlash("success", 'Mot de passe mis à jour avec succes');
 
-            return $this->redirectToRoute('app_login');
+            $security->logout(false); // déconnecter l'utilisateur après modification du mot de passe
+
+            return new RedirectResponse($this->generateUrl('app_login')); // rediriger l'utilisateur vers la page de connexion 
         }
 
         return $this->render('security/change_password.html.twig', [
