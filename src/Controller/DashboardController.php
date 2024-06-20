@@ -3,11 +3,13 @@
 namespace App\Controller;
 
 use App\Repository\GoalRepository;
-use App\Repository\FeedbackRepository;
 use App\Repository\TeamRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Mercure\Update;
+use App\Repository\FeedbackRepository;
+use Symfony\Component\Mercure\HubInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class DashboardController extends AbstractController
 {
@@ -32,5 +34,23 @@ class DashboardController extends AbstractController
             'feedbacks' => $feedbacks,
             'equipes' => $equipes,
         ]);
+    }
+
+
+
+    #[Route('/publish', name: 'publish')]
+
+    public function publish(HubInterface $hub): Response
+
+    {
+
+        $update = new Update(
+            'notifPasswordReset',
+            json_encode(['status' => 'message envoyé'])
+
+        );
+
+        $hub->publish($update);
+        return new Response('published!');
     }
 }

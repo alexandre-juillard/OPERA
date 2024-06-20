@@ -23,17 +23,26 @@
 		<link rel="stylesheet" href="/node_modules/@fullcalendar/core/main.css">
 		<link rel="stylesheet" href="/node_modules/@fullcalendar/daygrid/main.css">
 		<link rel="stylesheet" href="/css/base_bo.css">
+		<script>
+			window.addEventListener('load', function () {
+const eventSource = new EventSource("{{ mercure('notifPasswordReset')|escape('js') }}");
+eventSource.onmessage = event => { // Will be called every time an update is published by the server
+console.log(JSON.parse(event.data));
+}
+
+});
+		</script>
 	</head>
 	<body id="body-pd">
 		<header class="header" id="header">
 			<div class="header_toggle">
 				<i class='bx bx-menu' id="header-toggle"></i>
 			</div>
+			<div id="iconeRingNotifications">
+				<i class="fa-solid fa-bell"></i>
+			</div>
 			<div class="header_img">
 				<img src="https://i.imgur.com/hczKIze.jpg" alt="">
-			</div>
-			<div>
-				<i class="fa-solid fa-bell"></i>
 			</div>
 		</header>
 		<div class="l-navbar" id="nav-bar">
@@ -163,9 +172,9 @@
 				<span class="nav_name">Déconnexion</span>
 			</a>
 			{# <a href="#" class="nav_link">
-																																																																													<i class='bx bx-log-out nav_icon'></i>
-																																																																													<span class="nav_name">Déconnexion</span>
-																																																																												</a> #}
+																																																																																																		<i class='bx bx-log-out nav_icon'></i>
+																																																																																																		<span class="nav_name">Déconnexion</span>
+																																																																																																	</a> #}
 		</nav>
 		<div>
 			{% for message in app.flashes('success') %}
@@ -175,6 +184,7 @@
 				<div class="alert alert-danger">{{ message }}</div>
 			{% endfor %}
 		</div>
+
 	</body>
 </html></div><!--Container Main start--><div class="height-100 bg-white"> {% block body %}{% endblock %}
 </div></body><script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script><script src="/js/base_bo.js"></script></html>

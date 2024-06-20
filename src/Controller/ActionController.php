@@ -25,13 +25,13 @@ class ActionController extends AbstractController
 
     // Route pour afficher les entretiens par manager (ajustement du nom de méthode)
     #[Route('/manager/{id}', name: 'app_action_manager_index', methods: ['GET'], requirements: ['id' => '\d+'])]
-    public function listByManager(int $id, ActionRepository $actionRepository): Response 
+    public function listByManager(int $id, ActionRepository $actionRepository): Response
     {
-        $actions=[];
-        if ($this->isGranted('ROLE_MANAGER')){
+        $actions = [];
+        if ($this->isGranted('ROLE_MANAGER')) {
             $interviews = $actionRepository->findAllByManager($id);
         }
-        if ($this->isGranted('ROLE_USER')){
+        if ($this->isGranted('ROLE_USER')) {
             $interviews = $actionRepository->findAllByCollaborator($id);
         }
 
@@ -39,7 +39,7 @@ class ActionController extends AbstractController
             'actions' => $actions,
         ]);
     }
-    
+
     #[Route('/new', name: 'app_action_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
@@ -91,9 +91,9 @@ class ActionController extends AbstractController
     #[Route('/{id}', name: 'app_action_delete', methods: ['POST'])]
     public function delete(Security $security, Request $request, Action $action, EntityManagerInterface $entityManager): Response
     {
-        $user=$security->getUser();
-        $idManager=$user->getId();
-        if ($this->isCsrfTokenValid('delete'.$action->getId(), $request->request->get('_token'))) {
+        $user = $security->getUser();
+        $idManager = $user->getId();
+        if ($this->isCsrfTokenValid('delete' . $action->getId(), $request->request->get('_token'))) {
             $entityManager->remove($action);
             $entityManager->flush();
         }
