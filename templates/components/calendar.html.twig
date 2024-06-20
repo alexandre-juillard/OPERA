@@ -7,20 +7,22 @@
 	<h2>Calendrier</h2>
 
 	{# <pre>
-																																												{{ dump(events) }} here we got json datas from interviewcontroller
-																																											</pre> #}
+																																															{{ dump(events) }} here we got json datas from interviewcontroller
+																																														</pre> #}
 	{# style in calendar.scss #}
 	<div>
 		<ul
 			class="listCaption">
 			{# {{ dump(typeInterview) }} #}
 			{% for type in typeInterview %}
-
 				<li>
 					<div class="colorCaption" style="background-color:{{type.backgroundColor}}"></div>
 					{{type.name}}</li>
 			{% endfor %}
 		</ul>
+		<span>
+			<strong>Cliquer sur l'entretien pour plus de détails</strong>
+		</span>
 	</div>
 
 
