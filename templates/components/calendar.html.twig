@@ -7,8 +7,8 @@
 	<h2>Calendrier</h2>
 
 	{# <pre>
-																														{{ dump(events) }} here we got json datas from interviewcontroller
-																													</pre> #}
+																																												{{ dump(events) }} here we got json datas from interviewcontroller
+																																											</pre> #}
 	{# style in calendar.scss #}
 	<div>
 		<ul
@@ -40,9 +40,32 @@
 				<div
 					class="modal-body">
 					<!-- Contenu de la modale -->
-					<p id="interviewDetails"></p>
+					<div id="interviewDetails">
+						<div class="mb-3">
+							<strong>Titre:</strong>
+							<span id="interviewTitle"></span>
+						</div>
+						<div class="mb-3">
+							<strong>Avec:</strong>
+							<span id="interviewee"></span>
+						</div>
+						<div class="mb-3">
+							<strong>Prévu le:</strong>
+							<span id="interviewDate"></span>
+						</div>
+						<div class="mb-3">
+							<strong>Durée prévue:</strong>
+							<span id="interviewDuration"></span>
+						</div>
+						<div class="mb-3">
+							<strong>Statut:</strong>
+							<span id="interviewStatus"></span>
+						</div>
+					</div>
 				</div>
 				<div class="modal-footer">
+					<a href="#" class="btn btn-secondary" id="editInterview">Modifier</a>
+
 					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
 				</div>
 			</div>

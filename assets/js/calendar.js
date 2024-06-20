@@ -36,22 +36,27 @@ document.addEventListener('DOMContentLoaded', function () {
             //hiddenDays: [0, 1, 2, 3...], //uncomment to customize hidden days (0 = sunday, 1 = monday...)
             //allDaySlot: false, //uncomment to hide "all-day" slot at top of calendar
             events: events,
-            eventClick: function(info) {
+            eventClick: function (info) {
                 let eventObj = info.event;
 
                 fetch('/interview/details/' + eventObj.id) //recup url de la route
                     .then(response => response.json()) //envoie la reponse en json
                     .then(data => { //passe les infos necessaires à afficher
-                        console.log(data);
-                        document.getElementById('interviewDetails').textContent = `
-                            Titre: ${data.name}
-                            Avec: ${data.username}
-                            Prévu le: ${data.date}
-                            Durée prévue: ${data.duration} minutes
-                            Statut: ${data.status}`; //data = objet sur lequel on a cliqué, identifié par eventObj.id
+                        // console.log(data);
+                        //data = objet sur lequel on a cliqué, identifié par eventObj.id
+                        document.getElementById('interviewTitle').textContent = data.name || 'Inconnu';
+                        document.getElementById('interviewDate').textContent = data.date || 'Inconnu';
+                        document.getElementById('interviewee').textContent = data.username || 'Inconnu';
+                        document.getElementById('interviewDuration').textContent = `${data.duration} minutes` || 'Inconnu';
+                        document.getElementById('interviewStatus').textContent = data.status || 'Inconnu';
 
-                let interviewModal = new bootstrap.Modal(document.getElementById('interviewModal')); //affichage modale dans cet element
-                interviewModal.show();
+                        //ici on recup id du bouton modifier et on change id de url en dynamique avec eventObj.id
+                        let editButton = document.getElementById('editInterview');
+                        editButton.href = '/interview/' + eventObj.id + '/edit';
+
+                        //ici on affiche la modale avec bootstrap dans la div interviewModal
+                        let interviewModal = new bootstrap.Modal(document.getElementById('interviewModal')); //affichage modale dans cet element
+                        interviewModal.show();
                     })
                     .catch(error => console.error('Error : ', error)); //gestion de l'erreur
             }
