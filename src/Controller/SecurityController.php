@@ -167,7 +167,7 @@ class SecurityController extends AbstractController
             $user->setPassword($hashedPassword);
             $user->setUpdatedAt(new DateTime());
             $user->setFirstConnexion(new DateTime());
-
+            $user->setLastUpdatedPassword(new DateTime());
             $entityManager->persist($user);
             $entityManager->flush();
 
