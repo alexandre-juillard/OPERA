@@ -43,39 +43,31 @@ class DashboardController extends AbstractController
 
 
     #[Route('/publish', name: 'publish')]
-    public function publish(HubInterface $hub, Security $security): Response
+    public function publish(HubInterface $hub): Response
     {
-        dd($this->getUser());
+        // dd($this->getUser());
 
-        // $user = $this->getUser();// L"utilisateur connecté n'est pas reconnu et je ne sais pas pourquoi
-        // if ($user) {
-        //     $intervals = ['P0D', 'P83D', 'P87D', 'P90D', 'P91D'];
-        //     $lastUpdatedPassword = $user->getLastUpdatedPassword();
-        //     $today = new DateTime();
+        $user = $this->getUser(); // L"utilisateur connecté n'est pas reconnu et je ne sais pas pourquoi
+        if ($user) {
+            $intervals = ['P83D', 'P85D', 'P87D', 'P90D'];
+            $lastUpdatedPassword = $user->getLastUpdatedPassword();
+            $today = new DateTime();
 
-        //     foreach ($intervals as $interval) {
-        //         $dateToCheck = clone $lastUpdatedPassword;
-        //         $dateToCheck->add(new DateInterval($interval));
-        //         if ($dateToCheck->format('Y-m-d') === $today->format('Y-m-d')) {
-        //             $update = new Update(
-        //                 'notifPasswordReset',
-        //                 'Veuillez modifier votre mot de passe'
-        //             );
+            foreach ($intervals as $interval) {
+                $dateToCheck = clone $lastUpdatedPassword;
+                $dateToCheck->add(new DateInterval($interval));
+                if ($dateToCheck->format('Y-m-d') === $today->format('Y-m-d')) {
+                    $update = new Update(
+                        'notifPasswordReset',
+                        'Veuillez modifier votre mot de passe'
+                    );
 
-        //             $hub->publish($update);
-        //             return new Response('published!');
-        //         }
-        //     }
-        // }
+                    $hub->publish($update);
+                    return new Response('Notif envoyé!');
+                }
+            }
+        }
 
-
-        $update = new Update(
-            'notifPasswordReset',
-            'Veuillez modifier votre mot de passe'
-        );
-
-        $hub->publish($update);
-
-        return new Response('Notif envoyé!');
+        return new Response('Aucun notif envoyé!');
     }
 }

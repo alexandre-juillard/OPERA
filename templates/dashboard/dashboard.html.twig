@@ -14,34 +14,25 @@
 			left: 25%;
 		}
 	</style>
-	{% if is_granted('IS_FIRST_CONNEXION') %}
-		<p>Acces autorisé</p>
-		<div class="container mt-4">
-			<h1 class="text-center">Tableau de Bord</h1>
+	<div class="container mt-4">
+		<h1 class="text-center">Tableau de Bord</h1>
 
-			{# Section Objectifs #}
-			<section class="my-5">
-				<h2>Objectifs</h2>
-				{# Contenu dynamique des objectifs #}
-			</section>
+		{# Section Objectifs #}
+		<section class="my-5">
+			<h2>Objectifs</h2>
+			{# Contenu dynamique des objectifs #}
+		</section>
 
-			{# Section Feedbacks #}
-			<section class="my-5">
-				<h2>Feedbacks</h2>
-				{# Contenu dynamique des feedbacks #}
-			</section>
+		{# Section Feedbacks #}
+		<section class="my-5">
+			<h2>Feedbacks</h2>
+			{# Contenu dynamique des feedbacks #}
+		</section>
 
-			{# Section État des Équipes #}
-			<section class="my-5">
-				<h2>État des Équipes</h2>
-				{# Contenu dynamique sur l'état des équipes #}
-			</section>
-		</div>
-
-	{% else %}
-		<a href="{{ path('change_password_submit')}}">
-			<h1 class="messageResetPassword">Veuillez modifier votre mot de passe d'abord</h1>
-		</a>
-
-	{% endif %}
+		{# Section État des Équipes #}
+		<section class="my-5">
+			<h2>État des Équipes</h2>
+			{# Contenu dynamique sur l'état des équipes #}
+		</section>
+	</div>
 {% endblock %}
