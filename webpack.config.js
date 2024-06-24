@@ -38,12 +38,15 @@ Encore
 
   .addEntry('notification', './assets/js/notification.js') // Ajoute notification.js comme une nouvelle entrée
   .addStyleEntry('notification-style', './assets/styles/notification.css') // Ajoute notification.css comme une entrée de style
+  .addStyleEntry('bootstrap-table-style', './assets/styles/bootstrap-table.css')
   // .addStyleEntry('base-bo', './assets/styles/base_bo.css') // Ajoute base_bo.css comme une entrée de style
 
   // .addStyleEntry('home-style', './assets/styles/home.scss')
   // .addEntry('home', './assets/home.js') // Assurez-vous que le chemin et le fichier existent
   // .addStyleEntry('home', './assets/styles/home.scss') // Cette ligne est dupliquée, renommez ou supprimez-la
   .addEntry('calendarjs', './assets/js/calendar.js')
+  .addEntry('jquery', './assets/js/jquery.js')
+  .addEntry('bootstrap-table', './assets/js/bootstrap-table.js')
   // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.
   .splitEntryChunks()
 
