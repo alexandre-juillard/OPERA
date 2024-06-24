@@ -47,6 +47,7 @@ Encore
   .addEntry('calendarjs', './assets/js/calendar.js')
   .addEntry('jquery', './assets/js/jquery.js')
   .addEntry('bootstrap-table', './assets/js/bootstrap-table.js')
+  .addEntry('pastInterview', './assets/js/pastInterviews.js') //fichier js sur affichage interviews archivées
   // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.
   .splitEntryChunks()
 
