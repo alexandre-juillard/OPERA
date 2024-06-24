@@ -6,10 +6,15 @@ use App\Repository\GoalRepository;
 use App\Repository\TeamRepository;
 use Symfony\Component\Mercure\Update;
 use App\Repository\FeedbackRepository;
+use App\Repository\PersonalRepository;
+use DateInterval;
+use DateTime;
 use Symfony\Component\Mercure\HubInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Bundle\SecurityBundle\Security;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class DashboardController extends AbstractController
 {
@@ -37,20 +42,40 @@ class DashboardController extends AbstractController
     }
 
 
-
     #[Route('/publish', name: 'publish')]
-
-    public function publish(HubInterface $hub): Response
-
+    public function publish(HubInterface $hub, Security $security): Response
     {
+        dd($this->getUser());
+
+        // $user = $this->getUser();// L"utilisateur connecté n'est pas reconnu et je ne sais pas pourquoi
+        // if ($user) {
+        //     $intervals = ['P0D', 'P83D', 'P87D', 'P90D', 'P91D'];
+        //     $lastUpdatedPassword = $user->getLastUpdatedPassword();
+        //     $today = new DateTime();
+
+        //     foreach ($intervals as $interval) {
+        //         $dateToCheck = clone $lastUpdatedPassword;
+        //         $dateToCheck->add(new DateInterval($interval));
+        //         if ($dateToCheck->format('Y-m-d') === $today->format('Y-m-d')) {
+        //             $update = new Update(
+        //                 'notifPasswordReset',
+        //                 'Veuillez modifier votre mot de passe'
+        //             );
+
+        //             $hub->publish($update);
+        //             return new Response('published!');
+        //         }
+        //     }
+        // }
+
 
         $update = new Update(
             'notifPasswordReset',
-            json_encode(['status' => 'message envoyé'])
-
+            'Veuillez modifier votre mot de passe'
         );
 
         $hub->publish($update);
-        return new Response('published!');
+
+        return new Response('Notif envoyé!');
     }
 }
