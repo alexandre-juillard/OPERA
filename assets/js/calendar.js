@@ -25,6 +25,12 @@ document.addEventListener('DOMContentLoaded', function () {
                 center: 'today',
                 end: ''
             },
+            buttonText: {
+                today: 'Aujourd\'hui',
+                month: 'Mois',
+                week: 'Semaine',
+                day: 'Jour'
+            },
             height: 'auto',
             weekNumbers: true,
             weekNumberFormat: { week: 'numeric' },

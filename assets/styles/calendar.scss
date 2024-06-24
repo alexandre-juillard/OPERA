@@ -24,7 +24,7 @@
 .listCaption{
     display: flex;
     flex-wrap: wrap;
-    gap: 60px;
+    gap: 25px;
     list-style: none;
     margin: 20px;
 
@@ -37,12 +37,18 @@
 
 .colorCaption{
     height: 15px;
-    width: 15px;
-    border: 1px solid black;
+    width: 25px;
+    display: inline-block;
 }
 
 .modal-dialog{
     margin: 0 auto;
     display: flex;
     align-items: center;
+}
+
+.legend-color{
+    display: inline-block;
+    width: 16px;
+    height: 16px;
 }
