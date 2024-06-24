@@ -32,13 +32,13 @@
 
 		{# Tableau des entretiens #}
 		<div class="table-responsive">
-			<table class="table table-hover" data-locale="fr-FR" data-toggle="table" data-sort-name="name" data-sort-order="asc" data-pagination="true" data-search="true" data-show-columns="true" data-page-size="20" data-page-list="[5, 10, 20, 50]">
+			<table class="table table-hover" data-locale="fr-FR" data-toggle="table" data-sort-name="date" data-sort-order="asc" data-pagination="true" data-search="true" data-show-columns="true" data-page-size="20" data-page-list="[5, 10, 20, 50]">
 				<thead class="table-dark">
 					<tr scope="row">
-						<th scope="col">Date</th>
-						<th scope="col">Collaborateur</th>
-						<th scope="col">Type</th>
-						<th scope="col">Statut</th>
+						<th scope="col" data-field="date" data-sortable="true">Date</th>
+						<th scope="col" data-field="interviewee" data-sortable="true">Collaborateur</th>
+						<th scope="col" data-field="typeInterview" data-sortable="true">Type</th>
+						<th scope="col" data-field="status">Statut</th>
 						<th scope="col">Actions</th>
 					</tr>
 				</thead>
