@@ -3,7 +3,6 @@
 namespace App\Scheduler;
 
 use App\Scheduler\Message\ResetPasswordNotification;
-use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Scheduler\Attribute\AsSchedule;
 use Symfony\Component\Scheduler\RecurringMessage;
 use Symfony\Component\Scheduler\Schedule;
@@ -14,18 +13,17 @@ use Symfony\Contracts\Cache\CacheInterface;
 final class MainSchedule implements ScheduleProviderInterface
 {
     public function __construct(
-        private CacheInterface $cache
+        private CacheInterface $cache,
     ) {
     }
 
     public function getSchedule(): Schedule
     {
-
         return (new Schedule())
             ->add(
                 // @TODO - Create a Message to schedule
                 // RecurringMessage::every('1 hour', new App\Message\Message()),
-                RecurringMessage::every('60 second', new ResetPasswordNotification())
+                RecurringMessage::every('1 second', new ResetPasswordNotification())
             )
             ->stateful($this->cache);
     }

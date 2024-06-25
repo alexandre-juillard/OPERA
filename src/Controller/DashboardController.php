@@ -49,7 +49,7 @@ class DashboardController extends AbstractController
 
         $user = $this->getUser(); // L"utilisateur connecté n'est pas reconnu et je ne sais pas pourquoi
         if ($user) {
-            $intervals = ['P83D', 'P85D', 'P87D', 'P90D'];
+            $intervals = ['P0D', 'P83D', 'P85D', 'P87D', 'P90D'];
             $lastUpdatedPassword = $user->getLastUpdatedPassword();
             $today = new DateTime();
 
