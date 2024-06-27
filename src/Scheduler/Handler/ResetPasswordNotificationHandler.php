@@ -2,24 +2,27 @@
 
 namespace App\Scheduler\Handler;
 
-use DateTime;
-use DateInterval;
+use App\Repository\PersonalRepository;
 use Symfony\Component\Mercure\Update;
 use Symfony\Component\Mercure\HubInterface;
 use App\Scheduler\Message\ResetPasswordNotification;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
-use Symfony\Bundle\SecurityBundle\Security;
 
 #[AsMessageHandler]
 class ResetPasswordNotificationHandler
 {
 
-    public function __construct(private Security $security, private HubInterface $hub)
+    public function __construct(private HubInterface $hub, private PersonalRepository $personalRepository)
     {
     }
 
     public function __invoke(ResetPasswordNotification $message)
     {
+
+        dd($message);
+        $user = $this->personalRepository->find($message->getPersonalId());
+
+        dd($user);
         dump('hello');
         //dd($this->security->getUser());
         $update = new Update(

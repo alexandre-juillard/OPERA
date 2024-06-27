@@ -9,5 +9,5 @@ iconeNotif.addEventListener("click",function (event) {
     listNotifications.classList.toggle("clickAndShow");
     //numberOfNotifcations.classList.add("clickAndShow");
     //    bottom: 1rem;
-    divNotification.style.bottom="1.05rem";
+    //divNotification.style.bottom="1.05rem";
 })
