@@ -45,9 +45,9 @@ class DashboardController extends AbstractController
     #[Route('/publish', name: 'publish')]
     public function publish(HubInterface $hub): Response
     {
-        // dd($this->getUser());
-
         $user = $this->getUser(); // L"utilisateur connecté n'est pas reconnu et je ne sais pas pourquoi
+        // dd($user);
+
         if ($user) {
             $intervals = ['P0D', 'P83D', 'P85D', 'P87D', 'P90D'];
             $lastUpdatedPassword = $user->getLastUpdatedPassword();
