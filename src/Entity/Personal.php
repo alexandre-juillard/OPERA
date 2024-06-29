@@ -116,10 +116,8 @@ class Personal implements PasswordAuthenticatedUserInterface, UserInterface
         return $this->id;
     }
 
-    // Méthodes requises par l'interface UserInterface
     public function getUsername(): ?string
     {
-        // Je choisis d'utiliser l'email comme "username" pour l'authentification
         return $this->username;
     }
 
@@ -129,20 +127,6 @@ class Personal implements PasswordAuthenticatedUserInterface, UserInterface
 
         return $this;
     }
-    // private $name;
-
-    // // Assurez-vous que le getter existe
-    // public function getName(): ?string
-    // {
-    //     return $this->name;
-    // }
-
-    // // Setter optionnel si vous avez besoin de modifier cette propriété
-    // public function setName(string $name): self
-    // {
-    //     $this->name = $name;
-    //     return $this;
-    // }
 
     public function getEmail(): ?string
     {
@@ -156,24 +140,12 @@ class Personal implements PasswordAuthenticatedUserInterface, UserInterface
         return $this;
     }
 
-    // public function getPosition(): ?string
-    // {
-    //     return $this->position;
-    // }
-
-    // public function setPosition(?string $position): self
-    // {
-    //     $this->position = $position;
-    //     return $this;
-    // }
-
     public function getPassword(): ?string
     {
-        // Je retourne simplement le mot de passe hashé
         return $this->password;
     }
 
-    public function setPassword(?string $password): self
+    public function setPassword(?string $password): static
     {
         $this->password = $password;
 
@@ -242,11 +214,7 @@ class Personal implements PasswordAuthenticatedUserInterface, UserInterface
 
     public function getRoles(): array
     {
-        // Je m'assure qu'il y a toujours au moins un rôle, 'ROLE_USER' par défaut
-        $roles = $this->roles;
-        $roles[] = 'ROLE_USER';
-        // Je retourne les rôles de l'utilisateur, assurant qu'il y a toujours au moins 'ROLE_USER'
-        return array_unique($this->roles);
+        return $this->roles;
     }
 
     // Méthode pour ajouter un rôle à l'utilisateur
@@ -303,7 +271,7 @@ class Personal implements PasswordAuthenticatedUserInterface, UserInterface
     public function removeGoal(Goal $goal): static
     {
         if ($this->goals->removeElement($goal)) {
-            // Je définis le côté propriétaire sur null (sauf s’il a déjà été modifié)
+            // set the owning side to null (unless already changed)
             if ($goal->getPersonal() === $this) {
                 $goal->setPersonal(null);
             }
@@ -360,7 +328,7 @@ class Personal implements PasswordAuthenticatedUserInterface, UserInterface
     public function removeEmployeeSentiment(EmployeeSentiments $employeeSentiment): static
     {
         if ($this->employeeSentiments->removeElement($employeeSentiment)) {
-            // Je définis le côté propriétaire sur null (sauf s’il a déjà été modifié)
+            // set the owning side to null (unless already changed)
             if ($employeeSentiment->getPersonal() === $this) {
                 $employeeSentiment->setPersonal(null);
             }
@@ -390,7 +358,7 @@ class Personal implements PasswordAuthenticatedUserInterface, UserInterface
     public function removeWorkload(Workload $workload): static
     {
         if ($this->workloads->removeElement($workload)) {
-            // Je définis le côté propriétaire sur null (sauf s’il a déjà été modifié)
+            // set the owning side to null (unless already changed)
             if ($workload->getPersonal() === $this) {
                 $workload->setPersonal(null);
             }
@@ -401,9 +369,7 @@ class Personal implements PasswordAuthenticatedUserInterface, UserInterface
 
     /**
      * @return Collection<int, Interview>
-     * J'obtiens la collection des entretiens où la personne est l'interviewer
      */
-
     public function getInterviewsAsInterviewer(): Collection
     {
         return $this->interviewsAsInterviewer;
@@ -430,7 +396,6 @@ class Personal implements PasswordAuthenticatedUserInterface, UserInterface
 
         return $this;
     }
-
 
     /**
      * @return Collection<int, Interview>
@@ -464,10 +429,15 @@ class Personal implements PasswordAuthenticatedUserInterface, UserInterface
         return $this->profile;
     }
 
-    public function setProfile(Profile $profile): static
+    public function setProfile(?Profile $profile): static
     {
-        // Définir le côté propriétaire de la relation si nécessaire
-        if ($profile->getPersonal() !== $this) {
+        // unset the owning side of the relation if necessary
+        if ($profile === null && $this->profile !== null) {
+            $this->profile->setPersonal(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($profile !== null && $profile->getPersonal() !== $this) {
             $profile->setPersonal($this);
         }
 
@@ -494,21 +464,18 @@ class Personal implements PasswordAuthenticatedUserInterface, UserInterface
         return $this->teams;
     }
 
-    public function addTeam(Team $team): self
+    public function addTeam(Team $team): static
     {
         if (!$this->teams->contains($team)) {
             $this->teams->add($team);
-            $team->addMember($this); // Assurez-vous que la méthode addMember est définie dans Team
         }
 
         return $this;
     }
 
-    public function removeTeam(Team $team): self
+    public function removeTeam(Team $team): static
     {
-        if ($this->teams->removeElement($team)) {
-            $team->removeMember($this); // Assurez-vous que la méthode removeMember est définie dans Team
-        }
+        $this->teams->removeElement($team);
 
         return $this;
     }
@@ -593,6 +560,57 @@ class Personal implements PasswordAuthenticatedUserInterface, UserInterface
     public function setLastUpdatedPassword(?\DateTimeInterface $lastUpdatedPassword): static
     {
         $this->lastUpdatedPassword = $lastUpdatedPassword;
+
+        return $this;
+    }
+
+    public function setRoles(array $roles): static
+    {
+        $this->roles = $roles;
+
+        return $this;
+    }
+
+    public function addInterviewsAsInterviewer(Interview $interviewsAsInterviewer): static
+    {
+        if (!$this->interviewsAsInterviewer->contains($interviewsAsInterviewer)) {
+            $this->interviewsAsInterviewer->add($interviewsAsInterviewer);
+            $interviewsAsInterviewer->setInterviewer($this);
+        }
+
+        return $this;
+    }
+
+    public function removeInterviewsAsInterviewer(Interview $interviewsAsInterviewer): static
+    {
+        if ($this->interviewsAsInterviewer->removeElement($interviewsAsInterviewer)) {
+            // set the owning side to null (unless already changed)
+            if ($interviewsAsInterviewer->getInterviewer() === $this) {
+                $interviewsAsInterviewer->setInterviewer(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function addInterviewsAsInterviewee(Interview $interviewsAsInterviewee): static
+    {
+        if (!$this->interviewsAsInterviewee->contains($interviewsAsInterviewee)) {
+            $this->interviewsAsInterviewee->add($interviewsAsInterviewee);
+            $interviewsAsInterviewee->setInterviewee($this);
+        }
+
+        return $this;
+    }
+
+    public function removeInterviewsAsInterviewee(Interview $interviewsAsInterviewee): static
+    {
+        if ($this->interviewsAsInterviewee->removeElement($interviewsAsInterviewee)) {
+            // set the owning side to null (unless already changed)
+            if ($interviewsAsInterviewee->getInterviewee() === $this) {
+                $interviewsAsInterviewee->setInterviewee(null);
+            }
+        }
 
         return $this;
     }

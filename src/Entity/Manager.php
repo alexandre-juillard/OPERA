@@ -61,7 +61,7 @@ class Manager
         return $this->fullname;
     }
 
-    public function setFullname(string $fullname): static
+    public function setFullname(?string $fullname): static
     {
         $this->fullname = $fullname;
 
@@ -73,31 +73,19 @@ class Manager
         return $this->email;
     }
 
-    public function setEmail(string $email): static
+    public function setEmail(?string $email): static
     {
         $this->email = $email;
 
         return $this;
     }
 
-    // public function getPosition(): ?string
-    // {
-    //     return $this->position;
-    // }
-
-    // public function setPosition(string $position): static
-    // {
-    //     $this->position = $position;
-
-    //     return $this;
-    // }
-
     public function getMatricule(): ?string
     {
         return $this->matricule;
     }
 
-    public function setMatricule(string $matricule): static
+    public function setMatricule(?string $matricule): static
     {
         $this->matricule = $matricule;
 
@@ -109,7 +97,7 @@ class Manager
         return $this->department;
     }
 
-    public function setDepartment(string $department): static
+    public function setDepartment(?string $department): static
     {
         $this->department = $department;
 

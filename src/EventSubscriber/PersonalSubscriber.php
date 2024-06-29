@@ -2,6 +2,9 @@
 
 namespace App\EventSubscriber;
 
+use App\Entity\ConnectedPersonal;
+use App\Repository\ConnectedPersonalRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -12,17 +15,45 @@ class PersonalSubscriber implements EventSubscriberInterface
 {
     public ?RouterInterface $router = null;
     public ?Security $security = null;
+    public ?EntityManagerInterface $entityManager = null;
+    public ?ConnectedPersonalRepository $connectedRepository = null;
 
-    public function __construct(RouterInterface $router, Security $security)
+    public function __construct(RouterInterface $router, Security $security, EntityManagerInterface $entityManager, ConnectedPersonalRepository $connecteRepository)
     {
         $this->router = $router;
         $this->security = $security;
+        $this->entityManager = $entityManager;
+        $this->connectedRepository = $connecteRepository;
     }
+
     public function onLoginSuccessEvent(LoginSuccessEvent $event)
     {
-        //$request = $event->getRequest();
+
+
+        /* Ajout de l'utilisateur connecté  la table connected_user */
         /** @var \Personal $personal */
         $personal = $event->getPassport()->getUser();
+
+        $email = $personal->getEmail();
+
+        $connectedPersonnal = $this->connectedRepository->findBy(
+            ['email' => $email]
+        );
+
+        // dd($connectedPersonnal);
+
+        if (!$connectedPersonnal) {
+            $connectedPersonnal = new ConnectedPersonal();
+            $connectedPersonnal->setEmail($email);
+
+            $this->entityManager->persist($connectedPersonnal);
+            $this->entityManager->flush();
+        }
+
+
+        /* Redirection de l'utilisateur si première connexion */
+
+        //$request = $event->getRequest();
         // dd($user->getFirstConnexion());
         if ($personal->getFirstConnexion() == null) {
             // Redirige vers une nouvelle URL

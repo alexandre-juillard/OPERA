@@ -40,9 +40,6 @@ class EmployeeSentiments
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $manager = null;
 
-    // Je définis les getters et setters pour chaque propriété.
-    // Ces méthodes permettent de manipuler les attributs de l'entité de manière contrôlée.
-
     public function getId(): ?int
     {
         return $this->id;
@@ -56,6 +53,7 @@ class EmployeeSentiments
     public function setSentimentValue(?string $sentiment_value): static
     {
         $this->sentiment_value = $sentiment_value;
+
         return $this;
     }
 
@@ -67,6 +65,7 @@ class EmployeeSentiments
     public function setDate(?\DateTimeInterface $date): static
     {
         $this->date = $date;
+
         return $this;
     }
 
@@ -78,6 +77,7 @@ class EmployeeSentiments
     public function setComment(?string $comment): static
     {
         $this->comment = $comment;
+
         return $this;
     }
 
@@ -89,6 +89,7 @@ class EmployeeSentiments
     public function setCategory(?string $category): static
     {
         $this->category = $category;
+
         return $this;
     }
 
@@ -100,6 +101,7 @@ class EmployeeSentiments
     public function setIntensity(?string $intensity): static
     {
         $this->intensity = $intensity;
+
         return $this;
     }
 
@@ -111,6 +113,7 @@ class EmployeeSentiments
     public function setPersonal(?Personal $personal): static
     {
         $this->personal = $personal;
+
         return $this;
     }
 

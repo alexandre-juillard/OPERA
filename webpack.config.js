@@ -44,6 +44,7 @@ Encore
   // .addEntry('home', './assets/home.js') // Assurez-vous que le chemin et le fichier existent
   // .addStyleEntry('home', './assets/styles/home.scss') // Cette ligne est dupliquée, renommez ou supprimez-la
   .addEntry('notif', ['/assets/js/notif.js','/assets/styles/notif.scss'])
+  .addEntry('modal',['./assets/styles/modal.scss', './assets/js/modal.js'])
 
   // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.
   .splitEntryChunks()

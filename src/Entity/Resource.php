@@ -38,7 +38,6 @@ class Resource
     #[ORM\JoinColumn(nullable: true)]
     private ?Category $category = null;
 
-
     public function getId(): ?int
     {
         return $this->id;
@@ -109,7 +108,7 @@ class Resource
         return $this->personal;
     }
 
-    public function setPersonal(?Personal $personal): self
+    public function setPersonal(?Personal $personal): static
     {
         $this->personal = $personal;
 

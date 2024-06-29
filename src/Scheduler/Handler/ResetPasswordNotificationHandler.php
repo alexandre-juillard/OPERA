@@ -2,6 +2,7 @@
 
 namespace App\Scheduler\Handler;
 
+use App\Repository\ConnectedPersonalRepository;
 use App\Repository\PersonalRepository;
 use Symfony\Component\Mercure\Update;
 use Symfony\Component\Mercure\HubInterface;
@@ -12,19 +13,20 @@ use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 class ResetPasswordNotificationHandler
 {
 
-    public function __construct(private HubInterface $hub, private PersonalRepository $personalRepository)
+    public function __construct(private HubInterface $hub, private ConnectedPersonalRepository $connectedPersonalRepository)
     {
     }
 
     public function __invoke(ResetPasswordNotification $message)
     {
 
-        dd($message);
-        $user = $this->personalRepository->find($message->getPersonalId());
+        // dd($this->connectedPersonalRepository->findAll());
 
-        dd($user);
-        dump('hello');
         //dd($this->security->getUser());
+
+
+
+        dump("hello");
         $update = new Update(
             'notifPasswordReset',
             'Veuillez modifier votre mot de passe'

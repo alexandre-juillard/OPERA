@@ -38,4 +38,6 @@ services:
     tags:
       - { name: "security.voter" }
 
-  App\Service\UserService:
+  App\Security\Voter\PersonalVoter:
+    tags:
+      - { name: security.voter }
