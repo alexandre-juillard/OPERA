@@ -2,10 +2,10 @@
 
 namespace App\EventSubscriber;
 
-use App\Entity\ConnectedPersonal;
-use App\Repository\ConnectedPersonalRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Contracts\Cache\ItemInterface;
 use Symfony\Bundle\SecurityBundle\Security;
+use Symfony\Contracts\Cache\CacheInterface;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Security\Http\Event\LoginSuccessEvent;
@@ -16,45 +16,37 @@ class PersonalSubscriber implements EventSubscriberInterface
     public ?RouterInterface $router = null;
     public ?Security $security = null;
     public ?EntityManagerInterface $entityManager = null;
-    public ?ConnectedPersonalRepository $connectedRepository = null;
+    public ?CacheInterface $cache = null;
 
-    public function __construct(RouterInterface $router, Security $security, EntityManagerInterface $entityManager, ConnectedPersonalRepository $connecteRepository)
+    public function __construct(RouterInterface $router, Security $security, CacheInterface $cache)
     {
         $this->router = $router;
         $this->security = $security;
-        $this->entityManager = $entityManager;
-        $this->connectedRepository = $connecteRepository;
+        $this->cache = $cache;
     }
 
     public function onLoginSuccessEvent(LoginSuccessEvent $event)
     {
-
-
-        /* Ajout de l'utilisateur connecté  la table connected_user */
-        /** @var \Personal $personal */
+        // Enregistrer dans le cache le mail du dernier utilisateur connecté
         $personal = $event->getPassport()->getUser();
 
-        $email = $personal->getEmail();
+        // dd($personal->getEmail());
+        // Exemple de logique de mise en cache
+        $value = $this->cache->get('lastIdentifier', function (ItemInterface $item) use ($personal): string {
+            // dd($personal);
 
-        $connectedPersonnal = $this->connectedRepository->findBy(
-            ['email' => $email]
-        );
+            $item->expiresAfter(null); // délai d'expiration indéfini 
 
-        // dd($connectedPersonnal);
+            $data = $personal->getEmail();;
 
-        if (!$connectedPersonnal) {
-            $connectedPersonnal = new ConnectedPersonal();
-            $connectedPersonnal->setEmail($email);
+            return $data;
+        });
 
-            $this->entityManager->persist($connectedPersonnal);
-            $this->entityManager->flush();
-        }
-
+        //dd($value);
 
         /* Redirection de l'utilisateur si première connexion */
 
         //$request = $event->getRequest();
-        // dd($user->getFirstConnexion());
         if ($personal->getFirstConnexion() == null) {
             // Redirige vers une nouvelle URL
             $response = new RedirectResponse($this->router->generate('change_password_submit'));

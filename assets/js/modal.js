@@ -5,7 +5,7 @@ if(buttonPrimary) {
   buttonPrimary.click();
 }
 
-// Create a new MutationObserver 
+// Créer une instance de MutationObserver 
 const observer = new MutationObserver((mutations) => { 
     mutations.forEach((mutation) => { 
       console.log(mutation.type);  // mutation.type will be "attributes", "childList", or "characterData" 
@@ -14,15 +14,12 @@ const observer = new MutationObserver((mutations) => {
     }); 
   }); 
    
-  // Configure the observer to watch for changes 
+  // Configurer l'observateur pour écouter les changements dans le DOM 
   const config = { attributes: true, childList: true, subtree: true }; 
   observer.observe(modalWindow, config); 
    
-  // Later, you can disconnect the observer when you no longer need it 
+  // On peut arrêter l'observateur à tout moment
   //observer.disconnect(); 
-
-  console.log("hello world");
 
   // si la fenetre change, ecouter le modal
   // Si c'est le modal qui est présent, alors mettre le width à 100vw
-  // si le modal n'est pas p

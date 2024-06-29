@@ -2,9 +2,11 @@
 
 namespace App\Scheduler\Handler;
 
-use App\Repository\ConnectedPersonalRepository;
-use App\Repository\PersonalRepository;
+use DateTime;
+use DateInterval;
+use Psr\Cache\CacheItemPoolInterface;
 use Symfony\Component\Mercure\Update;
+use App\Repository\PersonalRepository;
 use Symfony\Component\Mercure\HubInterface;
 use App\Scheduler\Message\ResetPasswordNotification;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
@@ -13,7 +15,7 @@ use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 class ResetPasswordNotificationHandler
 {
 
-    public function __construct(private HubInterface $hub, private ConnectedPersonalRepository $connectedPersonalRepository)
+    public function __construct(private HubInterface $hub, private CacheItemPoolInterface $cacheItemPool, private PersonalRepository $personalRepository)
     {
     }
 
@@ -24,40 +26,35 @@ class ResetPasswordNotificationHandler
 
         //dd($this->security->getUser());
 
+        $item = $this->cacheItemPool->getItem('lastIdentifier');
+        $emailConnectedUser  = $item->get('lastIdentifier');
 
-
-        dump("hello");
-        $update = new Update(
-            'notifPasswordReset',
-            'Veuillez modifier votre mot de passe'
+        //dd($item);
+        // dd($item->get('#value'));
+        $user = $this->personalRepository->findOneBy(
+            [
+                'email' => $emailConnectedUser,
+            ]
         );
-        $this->hub->publish($update);
+        // dd($user);
 
-        //     dd('ok');
-
-        //     $user = $this->security->getUser(); // L"utilisateur connecté n'est pas reconnu et je ne sais pas pourquoi
-        //     dd($user);
-
-        //     if ($user) {
-        //         $intervals = ['P0D', 'P83D', 'P85D', 'P87D', 'P90D'];
-        //         $lastUpdatedPassword = $user->getLastUpdatedPassword();
-        //         $today = new DateTime();
-
-        //         foreach ($intervals as $interval) {
-        //             $dateToCheck = clone $lastUpdatedPassword;
-        //             $dateToCheck->add(new DateInterval($interval));
-        //             if ($dateToCheck->format('Y-m-d') === $today->format('Y-m-d')) {
-        //                 $update = new Update(
-        //                     'notifPasswordReset',
-        //                     'Veuillez modifier votre mot de passe'
-        //                 );
-
-        //                 $this->hub->publish($update);
-        //                 //  return new Response('Notif envoyé!');
-        //             }
-        //         }
-        //     } else {
-        //         throw new \ErrorException("Aucun utilisateur connecté");
-        //     }
+        if ($user) {
+            $intervals = ['P0D', 'P83D', 'P85D', 'P87D', 'P90D'];
+            $lastUpdatedPassword = $user->getLastUpdatedPassword();
+            foreach ($intervals as $interval) {
+                $today = new DateTime('2024-06-30');
+                $dateToCheck = clone $lastUpdatedPassword;
+                $dateToCheck->add(new DateInterval($interval));
+                if ($dateToCheck->format('Y-m-d') === $today->format('Y-m-d')) {
+                    $update = new Update(
+                        'notifPasswordReset',
+                        'Veuillez modifier votre mot de passe'
+                    );
+                    $this->hub->publish($update);
+                }
+            }
+        } else {
+            throw new \ErrorException("Aucun utilisateur connecté");
+        }
     }
 }
