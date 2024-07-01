@@ -37,10 +37,14 @@ class ResetPasswordNotificationHandler
             ]
         );
         // dd($user);
+        dump("hello world");
 
         if ($user) {
             $intervals = ['P0D', 'P83D', 'P85D', 'P87D', 'P90D'];
             $lastUpdatedPassword = $user->getLastUpdatedPassword();
+            if ($lastUpdatedPassword == null) {
+                throw new \ErrorException('Le password est null');
+            }
             foreach ($intervals as $interval) {
                 $today = new DateTime('2024-06-30');
                 $dateToCheck = clone $lastUpdatedPassword;

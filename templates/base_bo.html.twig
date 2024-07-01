@@ -41,7 +41,7 @@ eventSource.onmessage = event => {
 // Will be called every time an update is published by the server
 // console.log(JSON.parse(event.data));
 console.log(event.data);
-listNotifications.insertAdjacentHTML("afterbegin", "<a href='      {{ path('change_password_submit') }}'><li>" + event.data + "</li></a>");
+listNotifications.insertAdjacentHTML("afterbegin", "<a href='                                                {{ path('change_password_submit') }}'><li>" + event.data + "</li></a>");
 
 console.log(listNotifications.childNodes.length);
 
@@ -71,7 +71,9 @@ console.log("{{ mercure('chanel')|escape('js') }}")
 				</div>
 
 				{# mettre la condition d'affichage de la notif {% if condition %}{% endif %} #}
-				<ul id="listNotifications" class="clickAndShow" data-user={{app.user.email}}></ul>
+				{% if app.session.get('emailInCache') == app.user.email %}
+					<ul id="listNotifications" class="clickAndShow"></ul>
+				{% endif %}
 			</div>
 			<div class="header_img">
 				<img src="https://i.imgur.com/hczKIze.jpg" alt="">
@@ -204,9 +206,9 @@ console.log("{{ mercure('chanel')|escape('js') }}")
 				<span class="nav_name">Déconnexion</span>
 			</a>
 			{# <a href="#" class="nav_link">
-																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																															<i class='bx bx-log-out nav_icon'></i>
-																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																															<span class="nav_name">Déconnexion</span>
-																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																														</a> #}
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																	<i class='bx bx-log-out nav_icon'></i>
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																	<span class="nav_name">Déconnexion</span>
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																</a> #}
 		</nav>
 		<div>
 			{% for message in app.flashes('success') %}

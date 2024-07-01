@@ -10,6 +10,7 @@ use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Security\Http\Event\LoginSuccessEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 class PersonalSubscriber implements EventSubscriberInterface
 {
@@ -17,12 +18,14 @@ class PersonalSubscriber implements EventSubscriberInterface
     public ?Security $security = null;
     public ?EntityManagerInterface $entityManager = null;
     public ?CacheInterface $cache = null;
+    public ?RequestStack $requestStack = null;
 
-    public function __construct(RouterInterface $router, Security $security, CacheInterface $cache)
+    public function __construct(RouterInterface $router, Security $security, CacheInterface $cache, RequestStack $requestStack)
     {
         $this->router = $router;
         $this->security = $security;
         $this->cache = $cache;
+        $this->requestStack = $requestStack;
     }
 
     public function onLoginSuccessEvent(LoginSuccessEvent $event)
@@ -30,6 +33,11 @@ class PersonalSubscriber implements EventSubscriberInterface
         // Enregistrer dans le cache le mail du dernier utilisateur connecté
         $personal = $event->getPassport()->getUser();
 
+        // Enregistrer le mail de l'utiisateur connecté dans un attribut de session
+        $session = $this->requestStack->getsession();
+        $session->set("emailInCache", $personal->getEmail());
+
+        //dd($session);
         // dd($personal->getEmail());
         // Exemple de logique de mise en cache
         $value = $this->cache->get('lastIdentifier', function (ItemInterface $item) use ($personal): string {
