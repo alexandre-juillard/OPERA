@@ -11,7 +11,6 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Security\Http\Event\LoginSuccessEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
-use Symfony\Component\Security\Http\Event\LogoutEvent;
 
 class PersonalSubscriber implements EventSubscriberInterface
 {
@@ -38,6 +37,10 @@ class PersonalSubscriber implements EventSubscriberInterface
         // Enregistrer le mail de l'utiisateur connecté dans un attribut de session
         $session = $this->requestStack->getsession();
         $session->set("emailInCache",  $email);
+
+        // Enregistrer le mail de l'utiisateur connecté dans un attribut de session
+        $session = $this->requestStack->getsession();
+        $session->set("emailInCache", $personal->getEmail());
 
         //dd($session);
         // dd($personal->getEmail());

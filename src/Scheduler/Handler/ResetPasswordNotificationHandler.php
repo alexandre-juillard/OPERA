@@ -32,6 +32,7 @@ class ResetPasswordNotificationHandler
             ]
         );
         // dd($user);
+        dump("hello world");
 
         if ($user) {
             $chanel = 'notifPasswordReset' . $emailConnectedUser; // Le canal de chaque notification est unique pour chaque utilisateur
