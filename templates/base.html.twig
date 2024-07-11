@@ -29,6 +29,7 @@
 	<body>
 		{% include "partials/header.html.twig" %}
 		{% block body %}
+
 			<div>
 				{% for message in app.flashes('success') %}
 					<div class="alert alert-success">{{ message }}</div>
