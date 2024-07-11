@@ -22,36 +22,32 @@ class ResetPasswordNotificationHandler
     public function __invoke(ResetPasswordNotification $message)
     {
 
-        // dd($this->connectedPersonalRepository->findAll());
-
-        //dd($this->security->getUser());
-
         $item = $this->cacheItemPool->getItem('lastIdentifier');
         $emailConnectedUser  = $item->get('lastIdentifier');
 
-        //dd($item);
-        // dd($item->get('#value'));
+        // dd($item);
         $user = $this->personalRepository->findOneBy(
             [
                 'email' => $emailConnectedUser,
             ]
         );
         // dd($user);
-        dump("hello world");
 
         if ($user) {
+            $chanel = 'notifPasswordReset' . $emailConnectedUser; // Le canal de chaque notification est unique pour chaque utilisateur
             $intervals = ['P0D', 'P83D', 'P85D', 'P87D', 'P90D'];
             $lastUpdatedPassword = $user->getLastUpdatedPassword();
             if ($lastUpdatedPassword == null) {
                 throw new \ErrorException('Le password est null');
             }
             foreach ($intervals as $interval) {
-                $today = new DateTime('2024-06-30');
+                $today = new DateTime();
                 $dateToCheck = clone $lastUpdatedPassword;
                 $dateToCheck->add(new DateInterval($interval));
                 if ($dateToCheck->format('Y-m-d') === $today->format('Y-m-d')) {
+                    //   dd("ok");
                     $update = new Update(
-                        'notifPasswordReset',
+                        $chanel,
                         'Veuillez modifier votre mot de passe'
                     );
                     $this->hub->publish($update);
@@ -60,5 +56,7 @@ class ResetPasswordNotificationHandler
         } else {
             throw new \ErrorException("Aucun utilisateur connecté");
         }
+
+        //$this->cacheItemPool->deleteItem('lastIdentifier');
     }
 }

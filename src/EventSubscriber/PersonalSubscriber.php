@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Security\Http\Event\LoginSuccessEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\Security\Http\Event\LogoutEvent;
 
 class PersonalSubscriber implements EventSubscriberInterface
 {
@@ -32,14 +33,17 @@ class PersonalSubscriber implements EventSubscriberInterface
     {
         // Enregistrer dans le cache le mail du dernier utilisateur connecté
         $personal = $event->getPassport()->getUser();
+        $email = $personal->getEmail();
 
         // Enregistrer le mail de l'utiisateur connecté dans un attribut de session
         $session = $this->requestStack->getsession();
-        $session->set("emailInCache", $personal->getEmail());
+        $session->set("emailInCache",  $email);
 
         //dd($session);
         // dd($personal->getEmail());
         // Exemple de logique de mise en cache
+        // $cacheKey = 'lastIdentifier_' . $email;
+
         $value = $this->cache->get('lastIdentifier', function (ItemInterface $item) use ($personal): string {
             // dd($personal);
 
@@ -62,11 +66,15 @@ class PersonalSubscriber implements EventSubscriberInterface
         }
     }
 
+    public function OnLogoutEvent()
+    {
+    }
 
     public static function getSubscribedEvents(): array
     {
         return [
             LoginSuccessEvent::class => ['onLoginSuccessEvent', 1000],
+            LogoutEvent::class => ['OnLogoutEvent', 1001]
         ];
     }
 }

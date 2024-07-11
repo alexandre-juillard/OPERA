@@ -23,7 +23,7 @@ final class MainSchedule implements ScheduleProviderInterface
             ->add(
                 // @TODO - Create a Message to schedule
                 // RecurringMessage::every('1 hour', new App\Message\Message()),
-                RecurringMessage::every('5 second', new ResetPasswordNotification())
+                RecurringMessage::every('2 second', new ResetPasswordNotification())
             )
             ->stateful($this->cache);
     }

@@ -35,27 +35,25 @@ let numberOfNotifcations = document.querySelector("#numberOfNotifcations");
 let chanel = `notifPasswordReset${
 listNotifications.dataset.user
 }`;
-console.log(chanel)
-const eventSource = new EventSource("{{ mercure('notifPasswordResetsabrina.montassar@yahoo.fr')|escape('js') }}");
-eventSource.onmessage = event => {
-// Will be called every time an update is published by the server
-// console.log(JSON.parse(event.data));
-console.log(event.data);
-listNotifications.insertAdjacentHTML("afterbegin", "<a href='                                                {{ path('change_password_submit') }}'><li>" + event.data + "</li></a>");
+let mercureUrlTopic = "{{ mercure('')|escape('js') }}" + chanel;
 
-console.log(listNotifications.childNodes.length);
+// Initialiser EventSource avec l'URL construite
+const eventSource = new EventSource(mercureUrlTopic);
+eventSource.onmessage = event => { // Traitement de la notification
+console.log(event.data);
+listNotifications.insertAdjacentHTML("afterbegin", "<a href='                                                                                             {{ path('change_password_submit') }}'><li>" + event.data + "</li></a>");
 
 numberOfNotifcations.textContent = listNotifications.childNodes.length;
 
 listNotifications.addEventListener("click", function (event) {
-if (event.target === 'LI') {
+if (event.target.tagName === 'LI') {
 console.log("élément li");
-}
 event.target.remove();
+}
 })
 }
-});
 console.log("{{ mercure('chanel')|escape('js') }}")
+})
 		</script>
 
 	</head>
@@ -69,10 +67,9 @@ console.log("{{ mercure('chanel')|escape('js') }}")
 					<img id="iconeNotif" src="{{ asset('image/notif.svg')}}" alt="icône représent une cloche pour les notifications">
 					<p id="numberOfNotifcations">0</p>
 				</div>
-
 				{# mettre la condition d'affichage de la notif {% if condition %}{% endif %} #}
 				{% if app.session.get('emailInCache') == app.user.email %}
-					<ul id="listNotifications" class="clickAndShow"></ul>
+					<ul id="listNotifications" class="clickAndShow" data-user={{ app.session.get('emailInCache') }}></ul>
 				{% endif %}
 			</div>
 			<div class="header_img">
@@ -206,9 +203,9 @@ console.log("{{ mercure('chanel')|escape('js') }}")
 				<span class="nav_name">Déconnexion</span>
 			</a>
 			{# <a href="#" class="nav_link">
-																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																	<i class='bx bx-log-out nav_icon'></i>
-																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																	<span class="nav_name">Déconnexion</span>
-																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																</a> #}
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																<i class='bx bx-log-out nav_icon'></i>
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																<span class="nav_name">Déconnexion</span>
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																															</a> #}
 		</nav>
 		<div>
 			{% for message in app.flashes('success') %}

@@ -49,7 +49,7 @@ class DashboardController extends AbstractController
     public function publish(HubInterface $hub): Response
     {
         $user = $this->getUser(); // L"utilisateur connecté n'est pas reconnu et je ne sais pas pourquoi
-        // dd($user);
+        dd($user);
 
         if ($user) {
             $intervals = ['P0D', 'P83D', 'P85D', 'P87D', 'P90D'];
