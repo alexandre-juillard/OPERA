@@ -18,9 +18,9 @@ class EmployeeSentimentsType extends AbstractType
             ->add('sentiment_value', ChoiceType::class, [
                 'choices' => [
                     'Heureux' => 'happy',
+                    'Neutre' => 'neutral',
                     'Triste' => 'sad',
-                    'En colère' => 'angry',
-                    'Neutre' => 'neutral'
+
                 ],
                 'label' => 'Sentiment',
                 'placeholder' => 'Sélectionnez un sentiment',

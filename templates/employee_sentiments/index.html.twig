@@ -19,7 +19,21 @@
 
 				<tr>
 					<td>{{ sentiment.date|date('d/m/Y') }}</td>
-					<td>{{ sentiment.sentimentValue }}</td>
+					<td>
+						{% if sentiment.sentimentValue == 'happy' %}
+							<span>
+								<i class="bi bi-emoji-smile icon-large"></i>
+							</span>
+						{% elseif sentiment.sentimentValue == 'neutral' %}
+							<span>
+								<i class="bi bi-emoji-neutral icon-large"></i>
+							</span>
+						{% else %}
+							<span>
+								<i class="bi bi-emoji-frown icon-large"></i>
+							</span>
+						{% endif %}
+					</td>
 					<td>{{ sentiment.comment }}</td>
 					<td>
 						<a href="{{ path('app_employee_sentiments_show', {'id': sentiment.id}) }}" class="btn btn-info">Voir</a>
