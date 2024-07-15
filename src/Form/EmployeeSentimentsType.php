@@ -43,31 +43,6 @@ class EmployeeSentimentsType extends AbstractType
                     'rows' => 4
                 ],
                 'help' => 'Commentaire supplémentaire pour détailler le sentiment.'
-            ])
-            ->add('category', TextType::class, [
-                'required' => false,
-                'label' => 'Catégorie',
-                'attr' => [
-                    'placeholder' => 'Catégorie du sentiment (si applicable)'
-                ],
-                'help' => 'Catégorie pour classifier le sentiment.'
-            ])
-            ->add('intensity', ChoiceType::class, [
-                'choices' => [
-                    'Faible' => 'low',
-                    'Moyenne' => 'medium',
-                    'Forte' => 'high'
-                ],
-                'label' => 'Intensité',
-                'placeholder' => 'Sélectionnez l’intensité du sentiment',
-                'help' => 'Indiquez l’intensité du sentiment exprimé.'
-            ])
-            ->add('personal', EntityType::class, [
-                'class' => Personal::class,
-                'choice_label' => 'name',
-                'label' => 'Personne associée',
-                'placeholder' => 'Sélectionnez une personne',
-                'help' => 'La personne à qui le sentiment est associé.'
             ]);
     }
 

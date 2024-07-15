@@ -26,19 +26,10 @@ class EmployeeSentiments
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $comment = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $category = null;
-
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $intensity = null;
-
     // Je mets en place une relation ManyToOne avec l'entité Personal.
     #[ORM\ManyToOne(inversedBy: 'employeeSentiments')]
     #[ORM\JoinColumn(nullable: true)]
     private ?Personal $personal = null;
-
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $manager = null;
 
     // Je définis les getters et setters pour chaque propriété.
     // Ces méthodes permettent de manipuler les attributs de l'entité de manière contrôlée.
@@ -81,28 +72,6 @@ class EmployeeSentiments
         return $this;
     }
 
-    public function getCategory(): ?string
-    {
-        return $this->category;
-    }
-
-    public function setCategory(?string $category): static
-    {
-        $this->category = $category;
-        return $this;
-    }
-
-    public function getIntensity(): ?string
-    {
-        return $this->intensity;
-    }
-
-    public function setIntensity(?string $intensity): static
-    {
-        $this->intensity = $intensity;
-        return $this;
-    }
-
     public function getPersonal(): ?Personal
     {
         return $this->personal;
@@ -111,18 +80,6 @@ class EmployeeSentiments
     public function setPersonal(?Personal $personal): static
     {
         $this->personal = $personal;
-        return $this;
-    }
-
-    public function getManager(): ?string
-    {
-        return $this->manager;
-    }
-
-    public function setManager(?string $manager): static
-    {
-        $this->manager = $manager;
-
         return $this;
     }
 }
