@@ -14,7 +14,7 @@ class Workload
     #[ORM\Column(type: "integer")]
     private ?int $id = null;
 
-    #[ORM\Column(type: "string", length: 255, nullable: true)]
+    #[ORM\Column(type: "integer", nullable: true)]
     private ?string $workload_level = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
@@ -30,20 +30,20 @@ class Workload
     #[ORM\Column(type: "string", length: 255, nullable: true)]
     private ?string $description = null;
 
-    #[ORM\Column(type: "string", length: 255, nullable: true)]
-    private ?string $hours = null;
+    #[ORM\Column(type: "integer", nullable: true)]
+    private ?int $hours = null;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getWorkloadLevel(): ?string
+    public function getWorkloadLevel(): ?int
     {
         return $this->workload_level;
     }
 
-    public function setWorkloadLevel(?string $workload_level): self
+    public function setWorkloadLevel(?int $workload_level): self
     {
         $this->workload_level = $workload_level;
         return $this;
@@ -93,12 +93,12 @@ class Workload
         return $this;
     }
 
-    public function getHours(): ?string
+    public function getHours(): ?int
     {
         return $this->hours;
     }
 
-    public function setHours(?string $hours): self
+    public function setHours(?int $hours): self
     {
         $this->hours = $hours;
         return $this;

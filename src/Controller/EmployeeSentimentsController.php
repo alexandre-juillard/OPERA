@@ -45,8 +45,6 @@ class EmployeeSentimentsController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $employeeSentiment->setPersonal($this->getUser());
 
-            dump($employeeSentiment);
-
             $entityManager->persist($employeeSentiment);
             $entityManager->flush();
 
