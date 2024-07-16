@@ -20,7 +20,15 @@
 		</thead>
 		<tbody>
 			{% for workload in workloads %}
-				<tr>
+				<tr class="
+										{% if workload.workloadLevel <= 5 %}
+										workload-bg-low
+										{% elseif workload.workloadLevel >= 6 and workload.workloadLevel <= 8 %}
+										workload-bg-medium
+										{% else %}
+										workload-bg-high
+										{% endif %}
+										">
 					<td>{{ workload.id }}</td>
 					<td>Niveau
 						{{ workload.workloadLevel }}</td>
@@ -31,10 +39,7 @@
 					<td>
 						<a href="{{ path('app_workload_show', {'id': workload.id}) }}" class="btn btn-info">Afficher</a>
 						<a href="{{ path('app_workload_edit', {'id': workload.id}) }}" class="btn btn-primary">Éditer</a>
-						<form method="post" action="{{ path('app_workload_delete', {'id': workload.id}) }}" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cet élément ?');" style="display: inline-block;">
-							<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ workload.id) }}">
-							<button class="btn btn-danger">Supprimer</button>
-						</form>
+						{% include "workload/_delete_form.html.twig" %}
 					</td>
 				</tr>
 			{% else %}
