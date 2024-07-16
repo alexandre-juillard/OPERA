@@ -48,6 +48,7 @@ Encore
   .addEntry('jquery', './assets/js/jquery.js')
   .addEntry('bootstrap-table', './assets/js/bootstrap-table.js')
   .addEntry('pastInterview', './assets/js/pastInterviews.js') //fichier js sur affichage interviews archivées
+  .addEntry('weeklyReminder', './assets/js/weeklyReminder.js') //fichier js pour rappel de décla sentiments + charge travail
   // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.
   .splitEntryChunks()
 
