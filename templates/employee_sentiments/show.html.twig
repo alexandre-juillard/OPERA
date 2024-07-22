@@ -1,21 +1,28 @@
 {% extends 'base_bo.html.twig' %}
-{% block title %}Détails du Sentiment{% endblock %}
+{% block title %}Détails du Sentiment
+{% endblock %}
 {% block body %}
-<h1>Détails du Sentiment</h1>
-<table>
-    <tr>
-        <th>Date</th>
-        <td>{{ sentiment.date|date('Y-m-d') }}</td>
-    </tr>
-    <tr>
-        <th>Sentiment</th>
-        <td>{{ sentiment.sentiment_value }}</td>
-    </tr>
-    <tr>
-        <th>Commentaire</th>
-        <td>{{ sentiment.comment }}</td>
-    </tr>
-</table>
-<a href="{{ path('app_employee_sentiments_edit', {'id': sentiment.id}) }}">Éditer</a>
-<a href="{{ path('app_employee_sentiments_index') }}">Retour à la liste</a>
+	{% if is_granted("BLOCKED") %}
+		<p id="paragraphBlockedAccount">Votre compte est bloqué</p>
+	{% else %}
+		{% block content %}
+			<h1>Détails du Sentiment</h1>
+			<table>
+				<tr>
+					<th>Date</th>
+					<td>{{ sentiment.date|date('Y-m-d') }}</td>
+				</tr>
+				<tr>
+					<th>Sentiment</th>
+					<td>{{ sentiment.sentiment_value }}</td>
+				</tr>
+				<tr>
+					<th>Commentaire</th>
+					<td>{{ sentiment.comment }}</td>
+				</tr>
+			</table>
+			<a href="{{ path('app_employee_sentiments_edit', {'id': sentiment.id}) }}">Éditer</a>
+			<a href="{{ path('app_employee_sentiments_index') }}">Retour à la liste</a>
+		{% endblock %}
+	{% endif %}
 {% endblock %}

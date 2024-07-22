@@ -38,6 +38,7 @@ Encore
 
   .addEntry('notification', './assets/js/notification.js') // Ajoute notification.js comme une nouvelle entrée
   .addStyleEntry('notification-style', './assets/styles/notification.css') // Ajoute notification.css comme une entrée de style
+  .addEntry('block_user','./assets/styles/block_user.scss')
   // .addStyleEntry('base-bo', './assets/styles/base_bo.css') // Ajoute base_bo.css comme une entrée de style
 
   // .addStyleEntry('home-style', './assets/styles/home.scss')
