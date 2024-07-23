@@ -36,7 +36,7 @@ class PersonalVoter extends Voter
             $lastUpdatedPassword = $personal->getLastUpdatedPassword();
 
             if ($lastUpdatedPassword === null) { // Si l'utilisateur n'a pas modifié son modifié son mode de passe au moins une fois alors le bloquer
-                return false;
+                return false; // Si on veut bloquer l'utilisateur si le mot de passe n'a jamais été modifié, mettre "return true"
             }
 
             $target = clone $lastUpdatedPassword; // Cloner la dernière date de mise à jour
