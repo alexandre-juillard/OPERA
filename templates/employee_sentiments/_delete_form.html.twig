@@ -1,4 +1,6 @@
 <form method="post" action="{{ path('app_employee_sentiments_delete', {'id': sentiment.id}) }}" onsubmit="return confirm('Confirmez-vous la suppression de cet élément ?');" style="display: inline-block;">
 	<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ sentiment.id) }}">
-	<button type="submit" class="btn btn-danger">Supprimer</button>
+	<button type="submit" class="btn btn-danger btn-sm">
+		<i class="fas fa-trash-alt"></i>
+	</button>
 </form>

@@ -1,14 +1,14 @@
 {% extends 'base_bo.html.twig' %}
 
-{% block title %}New EmployeeSentiments
+{% block title %}Nouveau Sentiment
 {% endblock %}
 
 {% block body %}
-	<h1>Create new EmployeeSentiments</h1>
+	<h1>Déclarer un sentiment</h1>
 	{# {{ form_start(form) }}
-				    {{ form_widget(form) }}
-				    <button class="btn btn-success">{{ button_label|default('Save') }}</button>
-				    {{ form_end(form) }} #}
+						    {{ form_widget(form) }}
+						    <button class="btn btn-success">{{ button_label|default('Save') }}</button>
+						    {{ form_end(form) }} #}
 
 
 	{% include 'employee_sentiments/_form.html.twig' with {'form': form, 'button_label': 'Créer'} %}

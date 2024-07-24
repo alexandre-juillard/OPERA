@@ -5,6 +5,7 @@ import { Calendar } from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid'
 import interactionPlugin from '@fullcalendar/interaction'; // pour les interactions comme le clic
+import frLocale from '@fullcalendar/core/locales/fr'; // Importer la localisation française
 
 document.addEventListener('DOMContentLoaded', function () {
     const calendarEl = document.getElementById('calendar');
@@ -13,7 +14,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const calendar = new Calendar(calendarEl, {
             plugins: [dayGridPlugin, interactionPlugin, timeGridPlugin],
             initialView: 'timeGridWeek',
-            locale: 'fr',
+            locale: frLocale,
             timeZone: 'Europe/Paris',
             headerToolbar: {
                 start: 'dayGridMonth,timeGridWeek,timeGridDay',
@@ -24,12 +25,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 start: '',
                 center: 'today',
                 end: ''
-            },
-            buttonText: {
-                today: 'Aujourd\'hui',
-                month: 'Mois',
-                week: 'Semaine',
-                day: 'Jour'
             },
             height: 'auto',
             weekNumbers: true,

@@ -21,14 +21,14 @@
 		<tbody>
 			{% for workload in workloads %}
 				<tr class="
-										{% if workload.workloadLevel <= 5 %}
-										workload-bg-low
-										{% elseif workload.workloadLevel >= 6 and workload.workloadLevel <= 8 %}
-										workload-bg-medium
-										{% else %}
-										workload-bg-high
-										{% endif %}
-										">
+																												{% if workload.workloadLevel <= 5 %}
+																												workload-bg-low
+																												{% elseif workload.workloadLevel >= 6 and workload.workloadLevel <= 8 %}
+																												workload-bg-medium
+																												{% else %}
+																												workload-bg-high
+																												{% endif %}
+																												">
 					<td>{{ workload.id }}</td>
 					<td>Niveau
 						{{ workload.workloadLevel }}</td>
@@ -36,9 +36,13 @@
 					<td>{{ workload.comment }}</td>
 					<td>{{ workload.description }}</td>
 					<td>{{ workload.hours }}</td>
-					<td>
-						<a href="{{ path('app_workload_show', {'id': workload.id}) }}" class="btn btn-info">Afficher</a>
-						<a href="{{ path('app_workload_edit', {'id': workload.id}) }}" class="btn btn-primary">Éditer</a>
+					<td class="d-flex flex-nowrap">
+						<a href="{{ path('app_workload_show', {'id': workload.id}) }}" class="btn btn-info btn-sm me-2">
+							<i class="fas fa-eye"></i>
+						</a>
+						<a href="{{ path('app_workload_edit', {'id': workload.id}) }}" class="btn btn-primary btn-sm me-2">
+							<i class="fas fa-edit"></i>
+						</a>
 						{% include "workload/_delete_form.html.twig" %}
 					</td>
 				</tr>
