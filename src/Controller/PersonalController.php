@@ -48,14 +48,6 @@ class PersonalController extends AbstractController
             $this->em->persist($personal);
             $this->em->flush();
 
-            // $interview = new Interview;
-            // $interview->setInterviewer($this->getUser())
-            //             ->setStatus('Planifié')
-            //             ->setTypeInterview('Entretien Annuel')
-            //             ->setDate((new DateTime())->add(new DateInterval('P1M')));
-
-            //  $entityManager->persist($interview);
-            //  $entityManager->flush();
 
             $event = new PersonalCreatedEvent($personal);
             $this->eventDispatcher->dispatch($event, PersonalCreatedEvent::NAME);
