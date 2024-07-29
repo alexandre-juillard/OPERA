@@ -112,7 +112,7 @@ class PersonalCreatedListener implements EventSubscriberInterface
 
     private function getSpecificInterval(TypeInterview $typeInterview, Personal $personal): ?string
     {
-        if ($typeInterview->getName() === 'Entretien fin de période d\'essai') {
+        if ($typeInterview->getName() === 'Entretien fin période d\'essai') {
             switch ($personal->getSPC()) {
                 case 'employé':
                     return 'P30D'; // 1 mois
