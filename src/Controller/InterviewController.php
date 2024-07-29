@@ -164,8 +164,6 @@ class InterviewController extends AbstractController
             ];
         }
 
-
-
         //give data as array with php fct compact()
         return $this->render(
             'manager/level1/planning.html.twig',
