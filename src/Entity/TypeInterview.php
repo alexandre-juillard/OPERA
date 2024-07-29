@@ -30,6 +30,9 @@ class TypeInterview
     #[ORM\Column(nullable: true)]
     private ?int $duration = null;
 
+    #[ORM\Column]
+    private ?bool $isAutomatic = null;
+
     public function __construct()
     {
         $this->interviews = new ArrayCollection();
@@ -111,6 +114,18 @@ class TypeInterview
     public function setDuration(?int $duration): static
     {
         $this->duration = $duration;
+
+        return $this;
+    }
+
+    public function isAutomatic(): ?bool
+    {
+        return $this->isAutomatic;
+    }
+
+    public function setAutomatic(bool $isAutomatic): static
+    {
+        $this->isAutomatic = $isAutomatic;
 
         return $this;
     }
