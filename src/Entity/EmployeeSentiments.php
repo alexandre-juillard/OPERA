@@ -47,6 +47,7 @@ class EmployeeSentiments
     public function setSentimentValue(?string $sentiment_value): static
     {
         $this->sentiment_value = $sentiment_value;
+
         return $this;
     }
 
@@ -58,6 +59,7 @@ class EmployeeSentiments
     public function setDate(?\DateTimeInterface $date): static
     {
         $this->date = $date;
+
         return $this;
     }
 
@@ -69,6 +71,7 @@ class EmployeeSentiments
     public function setComment(?string $comment): static
     {
         $this->comment = $comment;
+
         return $this;
     }
 

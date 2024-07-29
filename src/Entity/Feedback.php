@@ -93,7 +93,7 @@ class Feedback
         return $this->personal;
     }
 
-    public function setPersonal(?Personal $personal): self
+    public function setPersonal(?Personal $personal): static
     {
         $this->personal = $personal;
 

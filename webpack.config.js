@@ -39,21 +39,25 @@ Encore
   .addEntry('notification', './assets/js/notification.js') // Ajoute notification.js comme une nouvelle entrée
   .addStyleEntry('notification-style', './assets/styles/notification.css') // Ajoute notification.css comme une entrée de style
   .addStyleEntry('bootstrap-table-style', './assets/styles/bootstrap-table.css')
+  // .addEntry('block_user','./assets/styles/block_user.scss')
   // .addStyleEntry('base-bo', './assets/styles/base_bo.css') // Ajoute base_bo.css comme une entrée de style
 
-  // .addStyleEntry('home-style', './assets/styles/home.scss')
-  // .addEntry('home', './assets/home.js') // Assurez-vous que le chemin et le fichier existent
+  // // .addStyleEntry('home-style', './assets/styles/home.scss')
+  // // .addEntry('home', './assets/home.js') // Assurez-vous que le chemin et le fichier existent
   // .addStyleEntry('home', './assets/styles/home.scss') // Cette ligne est dupliquée, renommez ou supprimez-la
   .addEntry('calendarjs', './assets/js/calendar.js')
   .addEntry('jquery', './assets/js/jquery.js')
   .addEntry('bootstrap-table', './assets/js/bootstrap-table.js')
   .addEntry('pastInterview', './assets/js/pastInterviews.js') //fichier js sur affichage interviews archivées
-  .addEntry('weeklyReminder', './assets/js/weeklyReminder.js') //fichier js pour rappel de décla sentiments + charge travail
+  .addEntry('weeklyReminder', './assets/js/weeklyReminder.js') //fichier js pour rappel de décla sentiments + charge travail  .addEntry('notif', ['/assets/js/notif.js','/assets/styles/notif.scss'])
+  .addEntry('modal', ['./assets/styles/modal.scss', './assets/js/modal.js'])
+  .addEntry('notif', ['/assets/js/notif.js', '/assets/styles/notif.scss'])
+
   // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.
   .splitEntryChunks()
 
-    // enables the Symfony UX Stimulus bridge (used in assets/bootstrap.js)
-    .enableStimulusBridge('./assets/controllers.json')
+  // enables the Symfony UX Stimulus bridge (used in assets/bootstrap.js)
+  .enableStimulusBridge('./assets/controllers.json')
 
   // enables the Symfony UX Stimulus bridge (used in assets/bootstrap.js)
   .enableStimulusBridge('./assets/controllers.json')

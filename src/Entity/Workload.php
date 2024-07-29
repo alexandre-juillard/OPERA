@@ -46,6 +46,7 @@ class Workload
     public function setWorkloadLevel(?int $workload_level): self
     {
         $this->workload_level = $workload_level;
+
         return $this;
     }
 
@@ -54,9 +55,10 @@ class Workload
         return $this->date;
     }
 
-    public function setDate(?\DateTimeInterface $date): self
+    public function setDate(?\DateTimeInterface $date): static
     {
         $this->date = $date;
+
         return $this;
     }
 
@@ -65,9 +67,10 @@ class Workload
         return $this->comment;
     }
 
-    public function setComment(?string $comment): self
+    public function setComment(?string $comment): static
     {
         $this->comment = $comment;
+
         return $this;
     }
 
@@ -76,9 +79,10 @@ class Workload
         return $this->personal;
     }
 
-    public function setPersonal(?Personal $personal): self
+    public function setPersonal(?Personal $personal): static
     {
         $this->personal = $personal;
+
         return $this;
     }
 
@@ -87,9 +91,10 @@ class Workload
         return $this->description;
     }
 
-    public function setDescription(?string $description): self
+    public function setDescription(?string $description): static
     {
         $this->description = $description;
+
         return $this;
     }
 
@@ -101,6 +106,7 @@ class Workload
     public function setHours(?int $hours): self
     {
         $this->hours = $hours;
+
         return $this;
     }
 }

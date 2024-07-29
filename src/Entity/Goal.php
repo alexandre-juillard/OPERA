@@ -67,7 +67,7 @@ class Goal
         return $this->description;
     }
 
-    public function setDescription(?string $description): self
+    public function setDescription(?string $description): static
     {
         $this->description = $description;
 
@@ -79,7 +79,7 @@ class Goal
         return $this->deadline;
     }
 
-    public function setDeadline(?\DateTimeInterface $deadline): self
+    public function setDeadline(?\DateTimeInterface $deadline): static
     {
         $this->deadline = $deadline;
 
@@ -91,7 +91,7 @@ class Goal
         return $this->status;
     }
 
-    public function setStatus(?string $status): self
+    public function setStatus(?string $status): static
     {
         $this->status = $status;
 
@@ -103,7 +103,7 @@ class Goal
         return $this->priority;
     }
 
-    public function setPriority(?string $priority): self
+    public function setPriority(?string $priority): static
     {
         $this->priority = $priority;
 
@@ -115,7 +115,7 @@ class Goal
         return $this->created_at;
     }
 
-    public function setCreatedAt(?\DateTimeInterface $created_at): self
+    public function setCreatedAt(?\DateTimeInterface $created_at): static
     {
         $this->created_at = $created_at;
 
@@ -127,7 +127,7 @@ class Goal
         return $this->updated_at;
     }
 
-    public function setUpdatedAt(?\DateTimeInterface $updated_at): self
+    public function setUpdatedAt(?\DateTimeInterface $updated_at): static
     {
         $this->updated_at = $updated_at;
 
@@ -139,7 +139,7 @@ class Goal
         return $this->personal;
     }
 
-    public function setPersonal(?Personal $personal): self
+    public function setPersonal(?Personal $personal): static
     {
         $this->personal = $personal;
 
@@ -180,10 +180,11 @@ class Goal
     {
         return $this->category;
     }
-    
+
     public function setCategory(?Category $category): static
     {
         $this->category = $category;
+
         return $this;
     }
 

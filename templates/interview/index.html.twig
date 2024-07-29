@@ -2,6 +2,8 @@
 
 {% block title %}Liste des Entretiens
 {% endblock %}
+{% block title %}Liste des Entretiens
+{% endblock %}
 
 {% block stylesheets %}
 	{{ parent() }}
@@ -10,68 +12,72 @@
 {% endblock %}
 
 {% block body %}
-	<div class="container mt-4">
-		<h1 class="mb-4">Liste des Entretiens</h1>
+{% if is_granted("BLOCKED") %}
+	<p id="paragraphBlockedAccount">Votre compte est bloqué</p>
+{% else %}
+	{% block content %}
+		<div class="container mt-4">
+			<h1 class="mb-4">Liste des Entretiens</h1>
 
-		{# Affichage des messages flash #}
-		<div class="flash-messages">
-			{% for flash_message in app.flashes('success') %}
-				<div class="alert alert-success">{{ flash_message }}</div>
-			{% endfor %}
-			{% for flash_message in app.flashes('error') %}
-				<div class="alert alert-danger">{{ flash_message }}</div>
-			{% endfor %}
-		</div>
+			{# Affichage des messages flash #}
+			<div class="flash-messages">
+				{% for flash_message in app.flashes('success') %}
+					<div class="alert alert-success">{{ flash_message }}</div>
+				{% endfor %}
+				{% for flash_message in app.flashes('error') %}
+					<div class="alert alert-danger">{{ flash_message }}</div>
+				{% endfor %}
+			</div>
 
-		{# Bouton pour créer un nouvel entretien #}
-		<div class="text-end mb-3">
-			<a href="{{ path('app_interview_new') }}" class="btn btn-success">
-				<i class="fas fa-plus-circle"></i>
-				Créer un nouvel entretien</a>
-		</div>
-		<button id="toggle-past-interviews" class="btn btn-primary">Afficher les entretiens archivés</button>
+			{# Bouton pour créer un nouvel entretien #}
+			<div class="text-end mb-3">
+				<a href="{{ path('app_interview_new') }}" class="btn btn-success">
+					<i class="fas fa-plus-circle"></i>
+					Créer un nouvel entretien</a>
+			</div>
+			<button id="toggle-past-interviews" class="btn btn-primary">Afficher les entretiens archivés</button>
 
-		{# Tableau des entretiens #}
-		<div class="table-responsive">
-			<table class="table table-hover" data-locale="fr-FR" data-toggle="table" data-sort-name="date" data-sort-order="desc" data-pagination="true" data-search="true" data-show-columns="true" data-page-size="20" data-page-list="[5, 10, 20, 50]" id="interview-table">
-				<thead class="table-dark">
-					<tr scope="row">
-						<th scope="col" data-field="date" data-sortable="true">Date</th>
-						<th scope="col" data-field="interviewee" data-sortable="true">Collaborateur</th>
-						<th scope="col" data-field="typeInterview" data-sortable="true">Type</th>
-						<th scope="col" data-field="status">Statut</th>
-						<th scope="col">Actions</th>
-					</tr>
-				</thead>
-				<tbody>
-					{% if interviews|length > 0 %}
-						{% for interview in interviews %}
-							<tr scope="row">
-								<td scope="col">{{ interview.date ? interview.date|date('Y-m-d H:i:s') : 'Non définie' }}</td>
-								<td scope="col">{{ interview.interviewee.username }}</td>
-								<td scope="col">{{ interview.typeInterview.name }}</td>
-								<td scope="col">{{ interview.status }}</td>
-								<td scope="col" class="d-flex flex-nowrap">
-									<a href="{{ path('app_interview_show', {'id': interview.id}) }}" class="btn btn-info btn-sm me-2" title="Afficher">
-										<i class="fas fa-eye"></i>
-									</a>
-									<a href="{{ path('app_interview_edit', {'id': interview.id}) }}" class="btn btn-primary btn-sm me-2" title="Modifier">
-										<i class="fas fa-edit"></i>
-									</a>
-									{{ include('interview/_delete_form.html.twig', { id: interview.id }) }}
-								</td>
-							</tr>
-						{% endfor %}
-					{% else %}
-						<tr>
-							<td colspan="5" class="text-center">Aucun enregistrement trouvé.</td>
+			{# Tableau des entretiens #}
+			<div class="table-responsive">
+				<table class="table table-hover" data-locale="fr-FR" data-toggle="table" data-sort-name="date" data-sort-order="desc" data-pagination="true" data-search="true" data-show-columns="true" data-page-size="20" data-page-list="[5, 10, 20, 50]" id="interview-table">
+					<thead class="table-dark">
+						<tr scope="row">
+							<th scope="col" data-field="date" data-sortable="true">Date</th>
+							<th scope="col" data-field="interviewee" data-sortable="true">Collaborateur</th>
+							<th scope="col" data-field="typeInterview" data-sortable="true">Type</th>
+							<th scope="col" data-field="status">Statut</th>
+							<th scope="col">Actions</th>
 						</tr>
-					{% endif %}
-				</tbody>
-			</table>
+					</thead>
+					<tbody>
+						{% if interviews|length > 0 %}
+							{% for interview in interviews %}
+								<tr scope="row">
+									<td scope="col">{{ interview.date ? interview.date|date('Y-m-d H:i:s') : 'Non définie' }}</td>
+									<td scope="col">{{ interview.interviewee.username }}</td>
+									<td scope="col">{{ interview.typeInterview.name }}</td>
+									<td scope="col">{{ interview.status }}</td>
+									<td scope="col" class="d-flex flex-nowrap">
+										<a href="{{ path('app_interview_show', {'id': interview.id}) }}" class="btn btn-info btn-sm me-2" title="Afficher">
+											<i class="fas fa-eye"></i>
+										</a>
+										<a href="{{ path('app_interview_edit', {'id': interview.id}) }}" class="btn btn-primary btn-sm me-2" title="Modifier">
+											<i class="fas fa-edit"></i>
+										</a>
+										{{ include('interview/_delete_form.html.twig', { id: interview.id }) }}
+									</td>
+								</tr>
+							{% endfor %}
+						{% else %}
+							<tr>
+								<td colspan="5" class="text-center">Aucun enregistrement trouvé.</td>
+							</tr>
+						{% endif %}
+					</tbody>
+				</table>
+			</div>
 		</div>
-	</div>
-	{{ encore_entry_script_tags('jquery') }}
-	{{ encore_entry_script_tags('bootstrap-table') }}
-	{{ encore_entry_script_tags('pastInterview') }}
-{% endblock %}
+		{{ encore_entry_script_tags('jquery') }}
+		{{ encore_entry_script_tags('bootstrap-table') }}
+		{{ encore_entry_script_tags('pastInterview') }}
+	{% endblock %}

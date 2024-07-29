@@ -51,9 +51,10 @@ class TypeInterview
         return $this->name;
     }
 
-    public function setName(?string $name): self
+    public function setName(?string $name): static
     {
         $this->name = $name;
+
         return $this;
     }
 
@@ -62,9 +63,10 @@ class TypeInterview
         return $this->description;
     }
 
-    public function setDescription(?string $description): self
+    public function setDescription(?string $description): static
     {
         $this->description = $description;
+
         return $this;
     }
 
@@ -76,7 +78,7 @@ class TypeInterview
         return $this->interviews;
     }
 
-    public function addInterview(Interview $interview): self
+    public function addInterview(Interview $interview): static
     {
         if (!$this->interviews->contains($interview)) {
             $this->interviews->add($interview);
@@ -86,9 +88,10 @@ class TypeInterview
         return $this;
     }
 
-    public function removeInterview(Interview $interview): self
+    public function removeInterview(Interview $interview): static
     {
         if ($this->interviews->removeElement($interview)) {
+            // set the owning side to null (unless already changed)
             if ($interview->getTypeInterview() === $this) {
                 $interview->setTypeInterview(null);
             }

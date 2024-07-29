@@ -7,6 +7,7 @@ use DateInterval;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -58,7 +59,6 @@ class Interview
         $this->goals = new ArrayCollection();
     }
 
-
     public function getId(): ?int
     {
         return $this->id;
@@ -95,12 +95,20 @@ class Interview
         return $this->feedback;
     }
 
-    public function setFeedback(?Feedback $feedback): self
+    public function setFeedback(?Feedback $feedback): static
     {
-        $this->feedback = $feedback;
-        if ($feedback !== null) {
+        // unset the owning side of the relation if necessary
+        if ($feedback === null && $this->feedback !== null) {
+            $this->feedback->setInterview(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($feedback !== null && $feedback->getInterview() !== $this) {
             $feedback->setInterview($this);
         }
+
+        $this->feedback = $feedback;
+
         return $this;
     }
 
@@ -109,9 +117,10 @@ class Interview
         return $this->interviewer;
     }
 
-    public function setInterviewer(?Personal $interviewer): self
+    public function setInterviewer(?Personal $interviewer): static
     {
         $this->interviewer = $interviewer;
+
         return $this;
     }
 
@@ -120,9 +129,10 @@ class Interview
         return $this->interviewee;
     }
 
-    public function setInterviewee(?Personal $interviewee): self
+    public function setInterviewee(?Personal $interviewee): static
     {
         $this->interviewee = $interviewee;
+
         return $this;
     }
 
@@ -131,9 +141,10 @@ class Interview
         return $this->typeInterview;
     }
 
-    public function setTypeInterview(?TypeInterview $typeInterview): self
+    public function setTypeInterview(?TypeInterview $typeInterview): static
     {
         $this->typeInterview = $typeInterview;
+
         return $this;
     }
 
@@ -142,9 +153,10 @@ class Interview
         return $this->title;
     }
 
-    public function setTitle(string $title): self
+    public function setTitle(?string $title): static
     {
         $this->title = $title;
+
         return $this;
     }
 
@@ -153,23 +165,12 @@ class Interview
         return $this->description;
     }
 
-    public function setDescription(string $description): self
+    public function setDescription(?string $description): static
     {
         $this->description = $description;
+
         return $this;
     }
-
-    // public function getGoal(): ?Collection
-    // {
-    //     return $this->goals;
-    // }
-
-    // public function setGoal(?string $goals): static
-    // {
-    //     $this->goals = $goals;
-
-    //     return $this;
-    // }
 
     /**
      * @return Collection<int, Goal>

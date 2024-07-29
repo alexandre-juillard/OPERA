@@ -54,9 +54,10 @@ class Team
         return $this->teamName;
     }
 
-    public function setTeamName(?string $teamName): self
+    public function setTeamName(?string $teamName): static
     {
         $this->teamName = $teamName;
+
         return $this;
     }
 
@@ -65,9 +66,10 @@ class Team
         return $this->description;
     }
 
-    public function setDescription(?string $description): self
+    public function setDescription(?string $description): static
     {
         $this->description = $description;
+
         return $this;
     }
 
@@ -76,64 +78,76 @@ class Team
         return $this->createdAt;
     }
 
-    public function setCreatedAt(?\DateTimeInterface $createdAt): self
+    public function setCreatedAt(?\DateTimeInterface $createdAt): static
     {
         $this->createdAt = $createdAt;
+
         return $this;
     }
 
+    /**
+     * @return Collection<int, TeamMember>
+     */
     public function getTeamMembers(): Collection
     {
         return $this->teamMembers;
     }
 
-    public function addTeamMember(TeamMember $teamMember): self
+    public function addTeamMember(TeamMember $teamMember): static
     {
         if (!$this->teamMembers->contains($teamMember)) {
-            $this->teamMembers[] = $teamMember;
+            $this->teamMembers->add($teamMember);
             $teamMember->setTeam($this);
         }
+
         return $this;
     }
 
-    public function removeTeamMember(TeamMember $teamMember): self
+    public function removeTeamMember(TeamMember $teamMember): static
     {
         if ($this->teamMembers->removeElement($teamMember)) {
+            // set the owning side to null (unless already changed)
             if ($teamMember->getTeam() === $this) {
                 $teamMember->setTeam(null);
             }
         }
+
         return $this;
     }
 
-    public function addMember(Personal $member): self
+    public function addMember(Personal $member): static
     {
         if (!$this->members->contains($member)) {
-            $this->members[] = $member;
+            $this->members->add($member);
             $member->addTeam($this);
         }
+
         return $this;
     }
 
-    public function removeMember(Personal $member): self
+    public function removeMember(Personal $member): static
     {
         if ($this->members->removeElement($member)) {
             $member->removeTeam($this);
         }
+
         return $this;
     }
 
+    /**
+     * @return Collection<int, Personal>
+     */
     public function getMembers(): Collection
     {
         return $this->members;
     }
 
-     public function getManager(): ?Manager
+    public function getManager(): ?Manager
     {
         return $this->manager;
     }
 
-    public function setManager(?Manager $manager): self
+    public function setManager(?Manager $manager): static
     {
         $this->manager = $manager;
 

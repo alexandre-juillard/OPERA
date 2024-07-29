@@ -4,9 +4,16 @@
 {% endblock %}
 
 {% block body %}
-	<h1>Créer un nouveau collaborateur</h1>
 
-	{{ include('personal/_form.html.twig') }}
+	{% if is_granted("BLOCKED") %}
+		<p id="paragraphBlockedAccount">Votre compte est bloqué</p>
+	{% else %}
+		{% block content %}
+			<h1>Créer un nouveau collaborateur</h1>
 
-	<a href="{{ path('app_personal_index') }}">Retour</a>
+			{{ include('personal/_form.html.twig') }}
+
+			<a href="{{ path('app_personal_index') }}">Retour</a>
+		{% endblock %}
+	{% endif %}
 {% endblock %}
