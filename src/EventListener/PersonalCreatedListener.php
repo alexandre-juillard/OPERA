@@ -3,13 +3,15 @@
 namespace App\EventListener;
 
 use DateInterval;
+use App\Entity\Personal;
 use App\Entity\Interview;
+use App\Entity\TypeInterview;
 use App\Event\PersonalCreatedEvent;
+use App\Repository\InterviewRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\TypeInterviewRepository;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use App\Repository\InterviewRepository;
 
 class PersonalCreatedListener implements EventSubscriberInterface
 {
@@ -19,8 +21,8 @@ class PersonalCreatedListener implements EventSubscriberInterface
     private $interviewRepository;
 
     public function __construct(
-        EntityManagerInterface $em, 
-        Security $security, 
+        EntityManagerInterface $em,
+        Security $security,
         TypeInterviewRepository $typeInterviewRepo,
         InterviewRepository $interviewRepository
     ) {
@@ -41,7 +43,7 @@ class PersonalCreatedListener implements EventSubscriberInterface
     {
         $personal = $event->getPersonal();
         $interviewer = $this->security->getUser();
-        $typesInterview = $this->typeInterviewRepo->findAll();
+        $typesInterview = $this->typeInterviewRepo->findAutomaticInterview(1);
         $exitDate = $this->getExitDate($personal);
 
         foreach ($typesInterview as $typeInterview) {
@@ -58,7 +60,7 @@ class PersonalCreatedListener implements EventSubscriberInterface
             $interview->setTypeInterview($typeInterview);
             $interview->setInterviewer($interviewer);
             $interview->setStatus('planifié');
-            
+
             $date = new \DateTime();
             $dateInterval = new DateInterval($interval);
             $date->add($dateInterval);
@@ -75,7 +77,7 @@ class PersonalCreatedListener implements EventSubscriberInterface
 
             $this->em->persist($interview);
         }
-        
+
         $this->em->flush();
     }
 
@@ -85,7 +87,7 @@ class PersonalCreatedListener implements EventSubscriberInterface
 
         while (true) {
             $interviewCount = $this->interviewRepository->countInterviewsForInterviewerOnDate($interviewer, $date);
-            
+
             if ($interviewCount < 2) {
                 return $date;
             }
@@ -110,7 +112,7 @@ class PersonalCreatedListener implements EventSubscriberInterface
 
     private function getSpecificInterval(TypeInterview $typeInterview, Personal $personal): ?string
     {
-        if ($typeInterview->getName() === 'Entretien Fin de période Essai') {
+        if ($typeInterview->getName() === 'Entretien fin de période d\'essai') {
             switch ($personal->getSPC()) {
                 case 'employé':
                     return 'P30D'; // 1 mois
@@ -127,6 +129,6 @@ class PersonalCreatedListener implements EventSubscriberInterface
 
     private function getExitDate(Personal $personal): ?\DateTime
     {
-        return $personal->getExitDate(); // Supposant que la méthode getExitDate existe dans l'entité Personal
+        return $personal->getExitDate();
     }
 }
