@@ -52,4 +52,16 @@ class InterviewRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+public function countInterviewsForInterviewerOnDate($interviewer, \DateTime $date): int
+{
+    return $this->createQueryBuilder('i')
+        ->select('COUNT(i.id)')
+        ->where('i.interviewer = :interviewer')
+        ->andWhere('i.date = :date')
+        ->setParameter('interviewer', $interviewer)
+        ->setParameter('date', $date->format('Y-m-d'))
+        ->getQuery()
+        ->getSingleScalarResult();
+}
 }

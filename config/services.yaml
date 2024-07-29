@@ -11,6 +11,9 @@ services:
     _defaults:
         autowire: true      # Injecte automatiquement les dépendances dans vos services.
         autoconfigure: true # Enregistre automatiquement vos services comme commandes, abonnés aux événements, etc.
+    App\EventListener\PersonalCreatedListener:
+        tags:
+            - { name: 'kernel.event_subscriber' }    
 
     # Rend les classes dans src/ disponibles pour être utilisées comme services
     # cela crée un service par classe dont l'identifiant est le nom de classe complet

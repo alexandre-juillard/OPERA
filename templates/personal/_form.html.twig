@@ -6,7 +6,11 @@
 {% block body %}
 	<h1>{{ form.vars.value.id ? 'Edit Personal' : 'Create new Personal' }}</h1>
 
-	{{form(form)}}
+	{{form_start(form)}}
 
+ <button type="submit">ajouter</button>
+
+ {{form_end(form)}}
 		<a href="{{ path('app_personal_index') }}">Back to list</a>
+		
 	{% endblock %}

@@ -73,21 +73,6 @@
             "./config/packages/sensio_framework_extra.yaml"
         ]
     },
-    "symfony/asset-mapper": {
-        "version": "7.0",
-        "recipe": {
-            "repo": "github.com/symfony/recipes",
-            "branch": "main",
-            "version": "6.4",
-            "ref": "4ff49f66191ce9356098e588684c27b935958b33"
-        },
-        "files": [
-            "./assets/app.js",
-            "./assets/styles/app.css",
-            "./config/packages/asset_mapper.yaml",
-            "./importmap.php"
-        ]
-    },
     "symfony/console": {
         "version": "7.0",
         "recipe": {
@@ -242,7 +227,7 @@
         ]
     },
     "symfony/stimulus-bundle": {
-        "version": "2.14",
+        "version": "2.18",
         "recipe": {
             "repo": "github.com/symfony/recipes",
             "branch": "main",
@@ -282,7 +267,7 @@
         ]
     },
     "symfony/ux-turbo": {
-        "version": "v2.14.2"
+        "version": "v2.18.0"
     },
     "symfony/validator": {
         "version": "7.0",
