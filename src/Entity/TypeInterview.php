@@ -30,6 +30,9 @@ class TypeInterview
     #[ORM\Column(nullable: true)]
     private ?int $duration = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $intervalDate = null;
+
     #[ORM\Column]
     private ?bool $isAutomatic = null;
 
@@ -114,6 +117,18 @@ class TypeInterview
     public function setDuration(?int $duration): static
     {
         $this->duration = $duration;
+
+        return $this;
+    }
+
+    public function getIntervalDate(): ?string
+    {
+        return $this->intervalDate;
+    }
+
+    public function setIntervalDate(string $intervalDate): static
+    {
+        $this->intervalDate = $intervalDate;
 
         return $this;
     }
