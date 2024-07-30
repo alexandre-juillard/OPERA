@@ -20,8 +20,8 @@
 
 		{% block javascripts %}
 			<!--<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous" defer></script>
-															{{ encore_entry_script_tags('modal') }}
-															!-->
+																		{{ encore_entry_script_tags('modal') }}
+																		!-->
 			<script>
 				let isUserConnected = {{ app.user ? true : false }};
 			</script>
@@ -40,7 +40,7 @@ let mercureUrlTopic = "{{ mercure('')|escape('js') }}" + chanel;
 const eventSource = new EventSource(mercureUrlTopic);
 eventSource.onmessage = event => { // Traitement de la notification
 console.log(event.data);
-listNotifications.insertAdjacentHTML("afterbegin", "<a href='                        {{ path('change_password_submit') }}'><li>" + event.data + "</li></a>");
+listNotifications.insertAdjacentHTML("afterbegin", "<a href='                         {{ path('change_password_submit') }}'><li>" + event.data + "</li></a>");
 numberOfNotifcations.textContent = listNotifications.childNodes.length;
 
 listNotifications.addEventListener("click", function (event) {
@@ -82,201 +82,189 @@ console.log("{{ mercure('chanel')|escape('js') }}");
 					<a class="navbar-brand" href="{{ path('home') }}">
 						<img src="{{ asset('/image/logo_OPERA.png') }}" alt="Logo OPERA" style="width: 50px;"></a>
 					<span class="nav_logo-name">OPERA</span>
-				</div>
 
-				<div class="nav_list">
-					{% if 'ROLE_ADMIN' in app.user.roles %}
-						<a href="#" class="nav_link active">
-							<i class='bx bx-bar-chart-alt-2 nav_icon'></i>
-							<span class="nav_name">Statistiques</span>
-						</a>
-						<a href="#" class="nav_link">
-							<i class='bx bx-user nav_icon'></i>
-							<span class="nav_name">Gestion des utilisateurs</span>
-						</a>
-						<a href="#" class="nav_link">
-							<i class='bx bx-user-circle nav_icon'></i>
-							<span class="nav_name">Gestion des équipes</span>
-						</a>
-						<a href="#" class="nav_link">
-							<i class='bx bx-chat nav_icon'></i>
-							<span class="nav_name">Gestion des entretiens</span>
-						</a>
-						<a href="#" class="nav_link">
-							<i class='bx bx-heart nav_icon'></i>
-							<span class="nav_name">Sentiments</span>
-						</a>
-						<a href="#" class="nav_link">
-							<i class='bx bx-align-justify nav_icon'></i>
-							<span class="nav_name">Charge de travail</span>
-						</a>
-						<a href="#" class="nav_link">
-							<i class='bx bx-folder-open nav_icon'></i>
-							<span class="nav_name">Gestion des ressources</span>
-						</a>
-						<a href="#" class="nav_link">
-							<i class='bx bx-cog nav_icon'></i>
-							<span class="nav_name">Configuration</span>
-						</a>
-					{% endif %}
-					{% if 'ROLE_MANAGER' in app.user.roles %}
-						<a href="{{ path('app_personal_index') }}" class="nav_link">
-							<i class='bx bx-user nav_icon'></i>
-							<span class="nav_name">Gestion des utilisateurs</span>
-						</a>
-						<a href="{{ path('app_team_index') }}" class="nav_link">
-							<i class='bx bx-layer nav_icon'></i>
-							<span class="nav_name">Gestion des équipes</span>
-						</a>
-						<a href="{{ path('manager_planning') }}" class="nav_link">
-							<i class='bx bx-calendar nav_icon'></i>
-							<span class="nav_name">Mon planning</span>
-						</a>
-						<a href="{{ path('app_interview_manager_index', {'id': app.user.id }) }}" class="nav_link">
-							<i class='bx bx-chat nav_icon'></i>
-							<span class="nav_name">Entretiens</span>
-						</a>
-						<a href="{{ path('app_goal_index', {'id': app.user.id }) }}" class="nav_link">
-							<i class='bx bx-bullseye nav_icon'></i>
-							<span class="nav_name">Objectifs</span>
-						</a>
-						<a href="{{ path('app_action_index', {'id': app.user.id }) }}" class="nav_link">
-							<i class='bx bx-task nav_icon'></i>
-							<span class="nav_name">Actions</span>
-						</a>
-						<a href="{{ path('app_feedback_index', {'id': app.user.id }) }}" class="nav_link">
-							<i class='bx bx-pen nav_icon'></i>
-							<span class="nav_name">Feedbacks</span>
-						</a>
-						<a href="{{ path('app_employee_sentiments_index', {'id': app.user.id }) }}" class="nav_link">
-							<i class='bx bx-heart nav_icon'></i>
-							<span class="nav_name">Gestion des Sentiments</span>
-						</a>
-						<a href="{{ path('app_workload_index', {'id': app.user.id }) }}" class="nav_link">
-							<i class='bx bx-align-justify nav_icon'></i>
-							<span class="nav_name">Charge de travail</span>
-						</a>
-						<a href="{{ path('app_resource_index', {'id': app.user.id }) }}" class="nav_link">
-							<i class='bx bx-folder-open nav_icon'></i>
-							<span class="nav_name">Ressources</span>
-						</a>
-						<a href="#" class="nav_link">
-							<i class='bx bx-bar-chart-alt-2 nav_icon'></i>
-							<span class="nav_name">Statistiques</span>
-						</a>
-					{% endif %}
-					{% if 'ROLE_USER' in app.user.roles %}
-						<a href="{{ path('app_interview_manager_index', {'id': app.user.id}) }}" class="nav_link active">
-							<i class='bx bx-chat nav_icon'></i>
-							<span class="nav_name">Mes entretiens</span>
-						</a>
-						<a href="{{ path('app_goal_index', {'id': app.user.id }) }}" class="nav_link">
-							<i class='bx bx-bullseye nav_icon'></i>
-							<span class="nav_name">Mes objectifs</span>
-						</a>
-						<a href="{{ path('app_action_index', {'id': app.user.id }) }}" class="nav_link">
-							<i class='bx bx-task nav_icon'></i>
-							<span class="nav_name">Mes actions</span>
-						</a>
-						<a href="{{ path('app_feedback_index', {'id': app.user.id }) }}" class="nav_link">
-							<i class='bx bx-pen nav_icon'></i>
-							<span class="nav_name">Mes feedback</span>
-						</a>
-						<a href="{{ path('app_employee_sentiments_index', {'id': app.user.id }) }}" class="nav_link">
-							<i class='bx bx-folder-open nav_icon'></i>
-							<span class="nav_name">Mes sentiments</span>
-						</a>
-						<a href="{{ path('app_workload_index', {'id': app.user.id }) }}" class="nav_link">
-							<i class='bx bx-align-justify nav_icon'></i>
-							<span class="nav_name">Ma charge de travail</span>
-						</a>
-						<a href="#" class="nav_link">
-							<i class='bx bx-bar-chart-alt-2 nav_icon'></i>
-							<span class="nav_name">Mes statistiques</span>
-						</a>
-					{% endif %}
-					<span class="nav_logo-name">OPERA</span>
+
+					<div class="nav_list">
+						{% if 'ROLE_ADMIN' in app.user.roles %}
+							<a href="#" class="nav_link active">
+								<i class='bx bx-bar-chart-alt-2 nav_icon'></i>
+								<span class="nav_name">Statistiques</span>
+							</a>
+							<a href="#" class="nav_link">
+								<i class='bx bx-user nav_icon'></i>
+								<span class="nav_name">Gestion des utilisateurs</span>
+							</a>
+							<a href="#" class="nav_link">
+								<i class='bx bx-user-circle nav_icon'></i>
+								<span class="nav_name">Gestion des équipes</span>
+							</a>
+							<a href="#" class="nav_link">
+								<i class='bx bx-chat nav_icon'></i>
+								<span class="nav_name">Gestion des entretiens</span>
+							</a>
+							<a href="#" class="nav_link">
+								<i class='bx bx-heart nav_icon'></i>
+								<span class="nav_name">Sentiments</span>
+							</a>
+							<a href="#" class="nav_link">
+								<i class='bx bx-align-justify nav_icon'></i>
+								<span class="nav_name">Charge de travail</span>
+							</a>
+							<a href="#" class="nav_link">
+								<i class='bx bx-folder-open nav_icon'></i>
+								<span class="nav_name">Gestion des ressources</span>
+							</a>
+							<a href="#" class="nav_link">
+								<i class='bx bx-cog nav_icon'></i>
+								<span class="nav_name">Configuration</span>
+							</a>
+						{% endif %}
+						{% if 'ROLE_MANAGER' in app.user.roles %}
+							<a href="{{ path('app_personal_index') }}" class="nav_link">
+								<i class='bx bx-user nav_icon'></i>
+								<span class="nav_name">Gestion des utilisateurs</span>
+							</a>
+							<a href="{{ path('app_team_index') }}" class="nav_link">
+								<i class='bx bx-layer nav_icon'></i>
+								<span class="nav_name">Gestion des équipes</span>
+							</a>
+							<a href="{{ path('manager_planning') }}" class="nav_link">
+								<i class='bx bx-calendar nav_icon'></i>
+								<span class="nav_name">Mon planning</span>
+							</a>
+							<a href="{{ path('app_interview_manager_index', {'id': app.user.id }) }}" class="nav_link">
+								<i class='bx bx-chat nav_icon'></i>
+								<span class="nav_name">Entretiens</span>
+							</a>
+							<a href="{{ path('app_goal_index', {'id': app.user.id }) }}" class="nav_link">
+								<i class='bx bx-bullseye nav_icon'></i>
+								<span class="nav_name">Objectifs</span>
+							</a>
+							<a href="{{ path('app_action_index', {'id': app.user.id }) }}" class="nav_link">
+								<i class='bx bx-task nav_icon'></i>
+								<span class="nav_name">Actions</span>
+							</a>
+							<a href="{{ path('app_feedback_index', {'id': app.user.id }) }}" class="nav_link">
+								<i class='bx bx-pen nav_icon'></i>
+								<span class="nav_name">Feedbacks</span>
+							</a>
+							<a href="{{ path('app_employee_sentiments_index', {'id': app.user.id }) }}" class="nav_link">
+								<i class='bx bx-heart nav_icon'></i>
+								<span class="nav_name">Gestion des Sentiments</span>
+							</a>
+							<a href="{{ path('app_workload_index', {'id': app.user.id }) }}" class="nav_link">
+								<i class='bx bx-align-justify nav_icon'></i>
+								<span class="nav_name">Charge de travail</span>
+							</a>
+							<a href="{{ path('app_resource_index', {'id': app.user.id }) }}" class="nav_link">
+								<i class='bx bx-folder-open nav_icon'></i>
+								<span class="nav_name">Ressources</span>
+							</a>
+							<a href="#" class="nav_link">
+								<i class='bx bx-bar-chart-alt-2 nav_icon'></i>
+								<span class="nav_name">Statistiques</span>
+							</a>
+						{% endif %}
+						{% if 'ROLE_USER' in app.user.roles %}
+							<a href="{{ path('app_interview_manager_index', {'id': app.user.id}) }}" class="nav_link active">
+								<i class='bx bx-chat nav_icon'></i>
+								<span class="nav_name">Mes entretiens</span>
+							</a>
+							<a href="{{ path('app_goal_index', {'id': app.user.id }) }}" class="nav_link">
+								<i class='bx bx-bullseye nav_icon'></i>
+								<span class="nav_name">Mes objectifs</span>
+							</a>
+							<a href="{{ path('app_action_index', {'id': app.user.id }) }}" class="nav_link">
+								<i class='bx bx-task nav_icon'></i>
+								<span class="nav_name">Mes actions</span>
+							</a>
+							<a href="{{ path('app_feedback_index', {'id': app.user.id }) }}" class="nav_link">
+								<i class='bx bx-pen nav_icon'></i>
+								<span class="nav_name">Mes feedback</span>
+							</a>
+							<a href="{{ path('app_employee_sentiments_index', {'id': app.user.id }) }}" class="nav_link">
+								<i class='bx bx-folder-open nav_icon'></i>
+								<span class="nav_name">Mes sentiments</span>
+							</a>
+							<a href="{{ path('app_workload_index', {'id': app.user.id }) }}" class="nav_link">
+								<i class='bx bx-align-justify nav_icon'></i>
+								<span class="nav_name">Ma charge de travail</span>
+							</a>
+							<a href="#" class="nav_link">
+								<i class='bx bx-bar-chart-alt-2 nav_icon'></i>
+								<span class="nav_name">Mes statistiques</span>
+							</a>
+						{% endif %}
+					</div>
 				</div>
 				<a href="{{ path('app_logout') }}" class="nav_link">
 					<i class='bx bx-log-out nav_icon'></i>
 					<span class="nav_name">Déconnexion</span>
 				</a>
 			</nav>
-		</div>
+		</body>
 	</body>
-	<div>
-		{% for message in app.flashes('success') %}
-			<div class="alert alert-success">{{ message }}</div>
-		{% endfor %}
-		{% for message in app.flashes('error') %}
-			<div class="alert alert-danger">{{ message }}</div>
-		{% endfor %}
-	</div>
-	{# Mettre en place le voter #}
-	{#
-								{% if is_granted("BLOCKED") %}
-									{% set visibility = is_granted("BLOCKED") == true ? 'hidden' : 'visible' %}
-									<button type="button" class="btn btn-primary m-5" style="visibility:{{ visibility }}" data-bs-toggle="modal" data-bs-target="#modalWindow">
-										Découvrir le modal
-									</button>
-									<div
-										class="modal fade" id="modalWindow" aria-labelledby="modal example" aria-hidden="true" data-bs-keyboard="false" data-bs-backdrop="static">
-										<!-- Pour désactiver la sélection extérieure, on rajoute les attributs data-bs-keyboard="false" data-bs-backdrop="static" -->
-										<div class="modal-dialog">
-											<div class="modal-content">
-												<div class="modal-header">
-													<h1 class="modal-title">Message important</h1>
-													<button type="button" class="btn btn-close" data-bs-dismiss="modal" aria-label="close"></button>
-												</div>
-												<div class="modal-body">
-													<p>Votre compte est bloqué actuellement, veuillez vous approcher auprès de l'administrateur système</p>
-													<h4>Les coordonnées de l'administrateur</h4>
-													<ul>
-														<li>Email: blabla@email.fr</li>
-														<li>Tél: 00000000000</li>
-													</ul>
-												</div>
-												<div class="modal-footer">
-													<button type="button" class="btn btn-danger" data-bs-dismiss="modal" aria-label="close">
-														Fermer
-													</button>
+</html></div><div>
+{% for message in app.flashes('success') %}
+	<div class="alert alert-success">{{ message }}</div>
+{% endfor %}
+{% for message in app.flashes('error') %}
+	<div class="alert alert-danger">{{ message }}</div>
+{% endfor %}</div>{# Mettre en place le voter #}{#
+									{% if is_granted("BLOCKED") %}
+										{% set visibility = is_granted("BLOCKED") == true ? 'hidden' : 'visible' %}
+										<button type="button" class="btn btn-primary m-5" style="visibility:{{ visibility }}" data-bs-toggle="modal" data-bs-target="#modalWindow">
+											Découvrir le modal
+										</button>
+										<div
+											class="modal fade" id="modalWindow" aria-labelledby="modal example" aria-hidden="true" data-bs-keyboard="false" data-bs-backdrop="static">
+											<!-- Pour désactiver la sélection extérieure, on rajoute les attributs data-bs-keyboard="false" data-bs-backdrop="static" -->
+											<div class="modal-dialog">
+												<div class="modal-content">
+													<div class="modal-header">
+														<h1 class="modal-title">Message important</h1>
+														<button type="button" class="btn btn-close" data-bs-dismiss="modal" aria-label="close"></button>
+													</div>
+													<div class="modal-body">
+														<p>Votre compte est bloqué actuellement, veuillez vous approcher auprès de l'administrateur système</p>
+														<h4>Les coordonnées de l'administrateur</h4>
+														<ul>
+															<li>Email: blabla@email.fr</li>
+															<li>Tél: 00000000000</li>
+														</ul>
+													</div>
+													<div class="modal-footer">
+														<button type="button" class="btn btn-danger" data-bs-dismiss="modal" aria-label="close">
+															Fermer
+														</button>
+													</div>
 												</div>
 											</div>
 										</div>
-									</div>
-								{% else %}
-									{% block content %}{% endblock %}
-								{% endif %}
-							#}
-	<!--Container Main start-->
-		<div class="height-100 bg-white"> {# <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#reminderModal">
-																																																Ouvrir la modale
-																																															</button> #}
-		<!-- Modale de rappel -->
-			<div class="modal fade" id="reminderModal" role="dialog" tabindex="-1" aria-labelledby="reminderModalLabel" aria-hidden="true"> <div class="modal-dialog" role="document">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h5 class="modal-title" id="reminderModalLabel">Rappel</h5>
-						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-					</div>
-					<div class="modal-body">
-						<p>Ceci est un rappel hebdomadaire. Déclarer votre sentiment actuel et votre charge de travail afin d'en savoir plus sur votre ressenti.</p>
-						<p>
-							<i>Cette action est facultative. Elle a pour seul but d'améliorer les conditions de travail de nos salariés.</i>
-						</p>
-					</div>
-					<div class="modal-footer">
-						<a href="{{ path('app_employee_sentiments_new') }}" class="btn btn-primary">Déclarer un sentiment</a>
-						<a href="{{ path('app_workload_new') }}" class="btn btn-primary">Déclarer une charge de travail</a>
-					</div>
-				</div>
+									{% else %}
+										{% block content %}{% endblock %}
+									{% endif %}
+								#}<!--Container Main start-->
+<div class="height-100 bg-white">{% block body %}{% endblock %}
+
+<!-- Modale de rappel -->
+<div class="modal fade" id="reminderModal" role="dialog" tabindex="-1" aria-labelledby="reminderModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="reminderModalLabel">Rappel</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				<p>Ceci est un rappel hebdomadaire. Déclarer votre sentiment actuel et votre charge de travail afin d'en savoir plus sur votre ressenti.</p>
+				<p>
+					<i>Cette action est facultative. Elle a pour seul but d'améliorer les conditions de travail de nos salariés.</i>
+				</p>
+			</div>
+			<div class="modal-footer">
+				<a href="{{ path('app_employee_sentiments_new') }}" class="btn btn-primary">Déclarer un sentiment</a>
+				<a href="{{ path('app_workload_new') }}" class="btn btn-primary">Déclarer une charge de travail</a>
 			</div>
 		</div>
-
-		{% block body %}{% endblock %}
 	</div>
-
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-	<script src="/js/base_bo.js"></script>
-</html>
+</div></body><script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script><script src="/js/base_bo.js"></script></html>
