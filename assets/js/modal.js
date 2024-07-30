@@ -19,7 +19,7 @@ if (buttonPrimary) {
 // observer.observe(modalWindow, config);
 
 // On peut arrêter l'observateur à tout moment
-observer.disconnect();
+// observer.disconnect();
 
 // si la fenetre change, ecouter le modal
 // Si c'est le modal qui est présent, alors mettre le width à 100vw

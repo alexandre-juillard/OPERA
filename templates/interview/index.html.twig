@@ -70,15 +70,17 @@
 								<tr>
 									<td colspan="5" class="text-center">Aucun enregistrement trouvé.</td>
 								</tr>
-							</tbody>
+							{% endif %}
 						</tbody>
 					</table>
 				</div>
 			</div>
+			{% block javascripts %}
+				{{ encore_entry_script_tags('jquery') }}
+				{{ encore_entry_script_tags('bootstrap-table') }}
+				{{ encore_entry_script_tags('pastInterview') }}
+			{% endblock %}
 
-			{{ encore_entry_script_tags('jquery') }}
-			{{ encore_entry_script_tags('bootstrap-table') }}
-			{{ encore_entry_script_tags('pastInterview') }}
 		{% endblock %}
 	{% endif %}
 {% endblock %}
