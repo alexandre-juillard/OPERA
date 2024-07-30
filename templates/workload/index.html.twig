@@ -34,7 +34,7 @@
 							<td>{{ workload.comment }}</td>
 							<td>{{ workload.description }}</td>
 							<td>{{ workload.hours }}</td>
-							<tdclass="d-flexflex-nowrap">
+							<td class="d-flexflex-nowrap">
 								<a href="{{ path('app_workload_show', {'id': workload.id}) }}" class="btn btn-info">Affichier</a>
 								<a href="{{ path('app_workload_edit', {'id': workload.id}) }}" class="btn btn-primary">Éditer</a>
 								<form method="post" action="{{ path('app_workload_delete', {'id': workload.id}) }}" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cet élément ?');" style="display: inline-block;">

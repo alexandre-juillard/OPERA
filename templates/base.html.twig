@@ -44,6 +44,7 @@
 		<script src="{{ asset('build/app.js') }}"></script>
 		<!-- Consolidated JavaScript -->
 		{% block javascripts %}
+            {% block importmap %}{{ importmap('app') }}{% endblock %}
 			<!-- Scripts gérés par Webpack Encore -->
 			{{ encore_entry_script_tags('app') }}
 		{% endblock %}

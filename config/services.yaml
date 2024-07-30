@@ -17,30 +17,30 @@ services:
 
   # Rend les classes dans src/ disponibles pour être utilisées comme services
   # cela crée un service par classe dont l'identifiant est le nom de classe complet
-  App\:
-    resource: "../src/*"
-    exclude: "../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}" # Exclut certains répertoires
+    App\:
+      resource: "../src/*"
+      exclude: "../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}" # Exclut certains répertoires
 
   # Configuration spécifique pour les contrôleurs pour permettre l'injection de dépendances via les arguments de service
-  App\Controller\:
-    resource: "../src/Controller"
-    tags: ["controller.service_arguments"]
+    App\Controller\:
+      resource: "../src/Controller"
+      tags: ["controller.service_arguments"]
 
   # Définition manuelle de services spécifiques si nécessaire
-  App\Service\ConfigService:
+    App\Service\ConfigService:
     # Injecte explicitement des références à d'autres services
-    arguments:
-      $configRepository: '@App\Repository\ConfigRepository'
-      $entityManager: "@doctrine.orm.entity_manager"
+      arguments:
+        $configRepository: '@App\Repository\ConfigRepository'
+        $entityManager: "@doctrine.orm.entity_manager"
 
   # Enregistrement des dépôts comme services si nécessaire
-  App\Repository\ConfigRepository:
+    App\Repository\ConfigRepository:
     # Si vous avez besoin d'arguments spécifiques ou d'appels de méthodes, définissez-les ici
 
-  App\Security\SentimentVoter:
-    tags:
-      - { name: "security.voter" }
+    App\Security\SentimentVoter:
+      tags:
+        - { name: "security.voter" }
 
-  App\Security\Voter\PersonalVoter:
-    tags:
-      - { name: security.voter }
+    App\Security\Voter\PersonalVoter:
+      tags:
+        - { name: security.voter }

@@ -6,10 +6,10 @@
 {% endblock %}
 
 {% block body %}
-{% if is_granted("BLOCKED") %}
-	<p id="paragraphBlockedAccount">Votre compte est bloqué</p>
-{% else %}
-	{% block content %}
+	{% if is_granted("BLOCKED") %}
+		<p id="paragraphBlockedAccount">Votre compte est bloqué</p>
+	{% else %}
+		{% block content %}
 		{# {% include 'components/resource_management_widget.twig' %} #}
 		<h1>Bibliothèque des Ressources</h1>
 
@@ -58,4 +58,5 @@
 				</tbody>
 			</table>
 		</div>
-	{% endblock %}
+	{% endif %}
+{% endblock %}

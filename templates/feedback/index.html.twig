@@ -35,7 +35,7 @@
 							<td>{{ feedback.date ? feedback.date|date('Y-m-d H:i:s') : '' }}</td>
 							<td>{{ feedback.type }}</td>
 							{# <td>{{ feedback.personal.username }}</td> #}
-							<td>
+							<td class="d-flex flex-nowrap">
 								<a href="{{ path('app_feedback_show', {'id': feedback.id}) }}" class="btn btn-info">Afficher</a>
 								<a href="{{ path('app_feedback_edit', {'id': feedback.id}) }}" class="btn btn-primary">Modifier</a>
 								{{ include('feedback/_delete_form.html.twig') }}

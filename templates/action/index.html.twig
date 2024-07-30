@@ -41,7 +41,7 @@
 								<td>{{ action.updatedAt ? action.updatedAt|date('Y-m-d ') : '' }}</td>
 								<td>{{ action.dueDate ? action.dueDate|date('Y-m-d ') : '' }}</td>
 
-								<td>
+								<td class="d-flex flex-nowrap">
 									<a href="{{ path('app_action_show', {'id': action.id}) }}" class="btn btn-info">Afficher</a>
 									<a href="{{ path('app_action_edit', {'id': action.id}) }}" class="btn btn-primary">Modifier</a>
 									{{ include ('action/_delete_form.html.twig')}}

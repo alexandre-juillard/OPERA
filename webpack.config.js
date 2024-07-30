@@ -52,6 +52,7 @@ Encore
   .addEntry('weeklyReminder', './assets/js/weeklyReminder.js') //fichier js pour rappel de décla sentiments + charge travail  .addEntry('notif', ['/assets/js/notif.js','/assets/styles/notif.scss'])
   .addEntry('modal', ['./assets/styles/modal.scss', './assets/js/modal.js'])
   .addEntry('notif', ['/assets/js/notif.js', '/assets/styles/notif.scss'])
+  .addEntry('block_user', './assets/styles/block_user.scss')
 
   // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.
   .splitEntryChunks()

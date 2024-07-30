@@ -51,7 +51,7 @@ class Personal implements PasswordAuthenticatedUserInterface, UserInterface
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $department = null;
 
-    #[ORM\OneToMany(targetEntity: Goal::class, mappedBy: 'personal')]
+
     #[ORM\OneToMany(targetEntity: Goal::class, mappedBy: 'personal')]
     private Collection $goals;
 
@@ -154,7 +154,8 @@ class Personal implements PasswordAuthenticatedUserInterface, UserInterface
     //     return $this;
     // }
 
-    public function getPassword(): ?string {
+    public function getPassword(): ?string
+    {
         // Je retourne simplement le mot de passe hashé
         return $this->password;
     }
@@ -235,9 +236,7 @@ class Personal implements PasswordAuthenticatedUserInterface, UserInterface
         return array_unique($this->roles);
     }
 
-    // Méthode pour ajouter un rôle à l'utilisateur
-    public function addRole(string $role): self
-    {
+
     // Méthode pour ajouter un rôle à l'utilisateur
     public function addRole(string $role): self
     {
@@ -249,8 +248,6 @@ class Personal implements PasswordAuthenticatedUserInterface, UserInterface
     }
 
     // Méthode pour retirer un rôle de l'utilisateur
-    public function removeRole(string $role): self
-    {
     public function removeRole(string $role): self
     {
         if (($key = array_search($role, $this->roles, true)) !== false) {
