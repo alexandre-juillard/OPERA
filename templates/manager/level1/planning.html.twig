@@ -5,35 +5,27 @@
 {% endblock %}
 
 {% block stylesheets %}
+	{{ parent() }}
+	{{ encore_entry_link_tags('calendar') }}
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.css" rel="stylesheet">
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.print.min.css" rel="stylesheet" media="print">
 {% endblock %}
 
+{% block javascripts %}
+	{{ encore_entry_script_tags('calendarjs') }}
+	<script>
+		// variable globale js qui sera recup dans calendar.js
+window.calendarEvents = {{ events|raw }};
+	</script>
+{% endblock %}
+
 {% block body %}
-	{# <h1>Mon Planning</h1>
-					<table>
-						<thead>
-							<tr>
-								<th>Date</th>
-								<th>Titre</th>
-								<th>Status</th>
-								<!-- autres colonnes si nécessaire -->
-							</tr>
-						</thead>
-						<tbody>
-							{% for interview in interviews %}
-								<tr>
-									<td>{{ interview.date|date('Y-m-d H:i') }}</td>
-									<td>{{ interview.title }}</td>
-									<td>{{ interview.status }}</td>
-									<!-- autres détails si nécessaire -->
-								</tr>
-							{% else %}
-								<tr>
-									<td colspan="3">Aucun entretien prévu</td>
-								</tr>
-							{% endfor %}
-						</tbody>
-					</table> #}
-	{% include 'components/calendar.html.twig' %}
+	{% if is_granted("BLOCKED") %}
+		<p id="paragraphBlockedAccount">Votre compte est bloqué</p>
+	{% else %}
+		{% block content %}
+			{% include 'components/calendar.html.twig' %}
+		{% endblock %}
+	{% endif %}
+
 {% endblock %}

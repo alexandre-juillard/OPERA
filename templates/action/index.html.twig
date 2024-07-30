@@ -42,8 +42,12 @@
 								<td>{{ action.dueDate ? action.dueDate|date('Y-m-d ') : '' }}</td>
 
 								<td class="d-flex flex-nowrap">
-									<a href="{{ path('app_action_show', {'id': action.id}) }}" class="btn btn-info">Afficher</a>
-									<a href="{{ path('app_action_edit', {'id': action.id}) }}" class="btn btn-primary">Modifier</a>
+									<a href="{{ path('app_action_show', {'id': action.id}) }}" class="btn btn-info btn-sm me-2">
+										<i class="fas fa-eye"></i>
+									</a>
+									<a href="{{ path('app_action_edit', {'id': action.id}) }}" class="btn btn-primary btn-sm me-2">
+										<i class="fas fa-edit"></i>
+									</a>
 									{{ include ('action/_delete_form.html.twig')}}
 								</td>
 							</tr>
