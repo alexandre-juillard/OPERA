@@ -8,6 +8,7 @@ import interactionPlugin from '@fullcalendar/interaction'; // pour les interacti
 import frLocale from '@fullcalendar/core/locales/fr'; // Importer la localisation française
 
 document.addEventListener('DOMContentLoaded', function () {
+    console.log('Calendar script loaded');
     const calendarEl = document.getElementById('calendar');
     let events = window.calendarEvents;
     if (calendarEl) {
@@ -67,6 +68,7 @@ document.addEventListener('DOMContentLoaded', function () {
         console.error('Calendar element not found in the DOM');
     }
 });
+
 
 //dayGrid = affiche pur
 //timeGrid = affichage avec les heures

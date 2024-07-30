@@ -6,6 +6,7 @@
 			{% block title %}Panneau d'administration
 			{% endblock %}
 		</title>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.css">
 		{% block stylesheets %}
 			<!-- Intégration de Bootstrap -->
 
@@ -20,8 +21,8 @@
 
 		{% block javascripts %}
 			<!--<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous" defer></script>
-																		{{ encore_entry_script_tags('modal') }}
-																		!-->
+																					{{ encore_entry_script_tags('modal') }}
+																					!-->
 			<script>
 				let isUserConnected = {{ app.user ? true : false }};
 			</script>
@@ -40,7 +41,7 @@ let mercureUrlTopic = "{{ mercure('')|escape('js') }}" + chanel;
 const eventSource = new EventSource(mercureUrlTopic);
 eventSource.onmessage = event => { // Traitement de la notification
 console.log(event.data);
-listNotifications.insertAdjacentHTML("afterbegin", "<a href='                         {{ path('change_password_submit') }}'><li>" + event.data + "</li></a>");
+listNotifications.insertAdjacentHTML("afterbegin", "<a href='                          {{ path('change_password_submit') }}'><li>" + event.data + "</li></a>");
 numberOfNotifcations.textContent = listNotifications.childNodes.length;
 
 listNotifications.addEventListener("click", function (event) {
@@ -211,40 +212,40 @@ console.log("{{ mercure('chanel')|escape('js') }}");
 {% for message in app.flashes('error') %}
 	<div class="alert alert-danger">{{ message }}</div>
 {% endfor %}</div>{# Mettre en place le voter #}{#
-									{% if is_granted("BLOCKED") %}
-										{% set visibility = is_granted("BLOCKED") == true ? 'hidden' : 'visible' %}
-										<button type="button" class="btn btn-primary m-5" style="visibility:{{ visibility }}" data-bs-toggle="modal" data-bs-target="#modalWindow">
-											Découvrir le modal
-										</button>
-										<div
-											class="modal fade" id="modalWindow" aria-labelledby="modal example" aria-hidden="true" data-bs-keyboard="false" data-bs-backdrop="static">
-											<!-- Pour désactiver la sélection extérieure, on rajoute les attributs data-bs-keyboard="false" data-bs-backdrop="static" -->
-											<div class="modal-dialog">
-												<div class="modal-content">
-													<div class="modal-header">
-														<h1 class="modal-title">Message important</h1>
-														<button type="button" class="btn btn-close" data-bs-dismiss="modal" aria-label="close"></button>
-													</div>
-													<div class="modal-body">
-														<p>Votre compte est bloqué actuellement, veuillez vous approcher auprès de l'administrateur système</p>
-														<h4>Les coordonnées de l'administrateur</h4>
-														<ul>
-															<li>Email: blabla@email.fr</li>
-															<li>Tél: 00000000000</li>
-														</ul>
-													</div>
-													<div class="modal-footer">
-														<button type="button" class="btn btn-danger" data-bs-dismiss="modal" aria-label="close">
-															Fermer
-														</button>
+										{% if is_granted("BLOCKED") %}
+											{% set visibility = is_granted("BLOCKED") == true ? 'hidden' : 'visible' %}
+											<button type="button" class="btn btn-primary m-5" style="visibility:{{ visibility }}" data-bs-toggle="modal" data-bs-target="#modalWindow">
+												Découvrir le modal
+											</button>
+											<div
+												class="modal fade" id="modalWindow" aria-labelledby="modal example" aria-hidden="true" data-bs-keyboard="false" data-bs-backdrop="static">
+												<!-- Pour désactiver la sélection extérieure, on rajoute les attributs data-bs-keyboard="false" data-bs-backdrop="static" -->
+												<div class="modal-dialog">
+													<div class="modal-content">
+														<div class="modal-header">
+															<h1 class="modal-title">Message important</h1>
+															<button type="button" class="btn btn-close" data-bs-dismiss="modal" aria-label="close"></button>
+														</div>
+														<div class="modal-body">
+															<p>Votre compte est bloqué actuellement, veuillez vous approcher auprès de l'administrateur système</p>
+															<h4>Les coordonnées de l'administrateur</h4>
+															<ul>
+																<li>Email: blabla@email.fr</li>
+																<li>Tél: 00000000000</li>
+															</ul>
+														</div>
+														<div class="modal-footer">
+															<button type="button" class="btn btn-danger" data-bs-dismiss="modal" aria-label="close">
+																Fermer
+															</button>
+														</div>
 													</div>
 												</div>
 											</div>
-										</div>
-									{% else %}
-										{% block content %}{% endblock %}
-									{% endif %}
-								#}<!--Container Main start-->
+										{% else %}
+											{% block content %}{% endblock %}
+										{% endif %}
+									#}<!--Container Main start-->
 <div class="height-100 bg-white">{% block body %}{% endblock %}
 
 <!-- Modale de rappel -->

@@ -4,31 +4,36 @@
 {% block title %}Mon Planning
 {% endblock %}
 
+{% block stylesheets %}
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.css" rel="stylesheet">
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.print.min.css" rel="stylesheet" media="print">
+{% endblock %}
+
 {% block body %}
 	{# <h1>Mon Planning</h1>
-				<table>
-					<thead>
-						<tr>
-							<th>Date</th>
-							<th>Titre</th>
-							<th>Status</th>
-							<!-- autres colonnes si nécessaire -->
-						</tr>
-					</thead>
-					<tbody>
-						{% for interview in interviews %}
+					<table>
+						<thead>
 							<tr>
-								<td>{{ interview.date|date('Y-m-d H:i') }}</td>
-								<td>{{ interview.title }}</td>
-								<td>{{ interview.status }}</td>
-								<!-- autres détails si nécessaire -->
+								<th>Date</th>
+								<th>Titre</th>
+								<th>Status</th>
+								<!-- autres colonnes si nécessaire -->
 							</tr>
-						{% else %}
-							<tr>
-								<td colspan="3">Aucun entretien prévu</td>
-							</tr>
-						{% endfor %}
-					</tbody>
-				</table> #}
+						</thead>
+						<tbody>
+							{% for interview in interviews %}
+								<tr>
+									<td>{{ interview.date|date('Y-m-d H:i') }}</td>
+									<td>{{ interview.title }}</td>
+									<td>{{ interview.status }}</td>
+									<!-- autres détails si nécessaire -->
+								</tr>
+							{% else %}
+								<tr>
+									<td colspan="3">Aucun entretien prévu</td>
+								</tr>
+							{% endfor %}
+						</tbody>
+					</table> #}
 	{% include 'components/calendar.html.twig' %}
 {% endblock %}
